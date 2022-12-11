@@ -8,6 +8,7 @@ use App\Models\P1\Product;
 use Image;
 use File;
 use Illuminate\Support\Facades\DB;
+use Validator;
 class ProductController extends Controller
 {
     /**
@@ -122,7 +123,59 @@ class ProductController extends Controller
     public function updateProduct(Request $request)
     {
         $id = $request->id;
-        var_dump($id);
+        $findProduct = Product::query()->where('id',$id)->first();
+        if ($findProduct != NULL) {
+            $search = Product::query()->where('id',$id)->first();
+            if ($request->name_product != NULL) {
+                $search->name_product = $request->name_product;   
+            }
+            if ($request->file('image') != NULL) {
+                $img_name = $search->picture;
+                $cek_file = File::exists(public_path('image_product/'.$img_name));
+                if ($cek_file) {
+                    unlink(public_path('image_product')."/".$img_name);
+                    $img = $request->file('image');
+                    $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.jpg';
+                    $image_resize = Image::make($img->getRealPath());  
+                    $image_resize->resize(200, 200);
+                    $image_resize->save(public_path('image_product/' .$name_image),40);
+                    $search->picture = $name_image;
+                }else{
+                    $img = $request->file('image');
+                    $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.jpg';
+                    $image_resize = Image::make($img->getRealPath());  
+                    $image_resize->resize(200, 200);
+                    $image_resize->save(public_path('image_product/' .$name_image),40);
+                    $search->picture = $name_image;
+                }
+            }
+            if ($request->price != NULL) {
+                if(!is_numeric($request->price)){
+                    return response()->json([
+                        'message' => 'error',
+                        'validation'=>[
+                            'msg1'=> 'input price just number 0 - 9'
+                        ]
+                    ],400);
+                }else{
+                    $search->price = $request->price;
+                }
+                
+            }
+            if ($search->save()) {
+                return response()->json([
+                    'message' => 'update successfully',
+                ],200);
+            }else{
+                return response()->json([
+                    'message' => 'update failed',
+                ],400);
+            }
+        }else{
+            return response()->json([
+                'message' => 'id product not found',
+            ],400);
+        }
     }
 
     /**
@@ -165,12 +218,15 @@ class ProductController extends Controller
             ],401);
         }
     }
+
+    public function sadfasdf()
+    {
+
+    }
     public function destroy(Request $request, $id)
     {
         //
-        $idInput = $request->id;
-        $search = Product::query()->where('id',$id)->first();
-        var_dump($search);
-        var_dump($idInput);
+        $idInput = $request->id; 
+       
     }
 }

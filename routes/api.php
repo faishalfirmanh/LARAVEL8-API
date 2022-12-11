@@ -28,7 +28,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login_api', [UserController::class, 'LoginApi']);//jwt
 Route::group(['middleware' => ['jwt.verify']], function() { //jwt
     Route::resource('products', ProductController::class);
+    Route::post('delete_products',[ProductController::class,'deleteProduct']);//use
+    Route::post('update_products',[ProductController::class,'updateProduct']);
     Route::post('logout_api', [UserController::class, 'logoutApi']);
 });
-Route::post('delete_products',[ProductController::class,'deleteProduct']);//use
-Route::post('update_products',[ProductController::class,'updateProduct']);
