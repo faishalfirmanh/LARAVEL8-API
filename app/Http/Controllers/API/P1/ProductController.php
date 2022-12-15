@@ -361,19 +361,60 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function delemetImageProductP1($id)
+    {   
+        $data_img_prod_p1 = ProductImage::query()->where('id_product',$id)->where('image_name','like', '%' . 'p1' . '%')->first();
+        if ($data_img_prod_p1 != NULL) {
+            $name_image = $data_img_prod_p1->image_name;
+            $cek_file = File::exists(public_path('img_prod_p1/'.$name_image));
+            if ($cek_file) {
+                unlink(public_path('img_prod_p1')."/".$name_image);
+            }
+            ProductImage::where('id',$data_img_prod_p1->id)->delete();
+        } 
+    }
+    public function delemetImageProductP2($id)
+    {
+        $data_img_prod_p2 = ProductImage::query()->where('id_product',$id)->where('image_name','like', '%' . 'p2' . '%')->first();
+        if ($data_img_prod_p2 != NULL) {
+            $name_image = $data_img_prod_p2->image_name;
+            $cek_file = File::exists(public_path('img_prod_p2/'.$name_image));
+            if ($cek_file) {
+                unlink(public_path('img_prod_p2')."/".$name_image);
+            }
+            ProductImage::where('id',$data_img_prod_p2->id)->delete();
+          
+        }
+    }
+    public function delemetImageProductP3($id)
+    {
+        $data_img_prod_p3 = ProductImage::query()->where('id_product',$id)->where('image_name','like', '%' . 'p3' . '%')->first();
+        if ($data_img_prod_p3 != NULL) {
+            $name_image = $data_img_prod_p3->image_name;
+            $cek_file = File::exists(public_path('img_prod_p3/'.$name_image));
+            if ($cek_file) {
+                unlink(public_path('img_prod_p3')."/".$name_image);
+            }
+            ProductImage::where('id',$data_img_prod_p3->id)->delete();
+        }
+    }
     public function deleteProduct(Request $request)
     {
         $search = Product::query()->where('id',$request->id)->first();
         if ($search != NULL) {
             $img_name = $search->picture;
             $cek_file = File::exists(public_path('image_product/'.$img_name));
+            $this->delemetImageProductP3($request->id);
+            $this->delemetImageProductP2($request->id);
+            $this->delemetImageProductP1($request->id);
             if ($cek_file) {
                 unlink(public_path('image_product')."/".$img_name);
                 DB::table('p1_product')->where('id', $request->id)->delete();
                 return response()->json([
                     'message' => 'delete successfully',
                     'validation'=>[
-                        'msg1'=> 'image already deleted'
+                        'msg1'=> 'main image already deleted',
+                        'id_product'=>$request->id
                     ]
                 ],200);
                 
@@ -382,7 +423,8 @@ class ProductController extends Controller
                 return response()->json([
                     'message' => 'delete successfully',
                     'validation'=>[
-                        'msg1'=> 'image not found'
+                        'msg1'=> 'image not found',
+                        'id_product'=>$request->id
                     ]
                 ],200);
             }
@@ -390,7 +432,8 @@ class ProductController extends Controller
             return response()->json([
                 'message' => 'delete failed',
                 'validation'=>[
-                    'error'=> 'data not found'
+                    'error'=> 'data not found',
+                    'id_product'=>$request->id
                 ]
             ],401);
         }
