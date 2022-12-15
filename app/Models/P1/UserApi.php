@@ -11,7 +11,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class UserApi extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
-    protected $table = 'usersapi';
+    protected $table = 'p1_usersapi';
     
     protected $fillable = [
         'name',

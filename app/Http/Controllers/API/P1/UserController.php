@@ -100,7 +100,7 @@ class UserController extends BaseController
                 // $user->createToken('MyApp')->plainTextToken; 
 
                //jwt
-               $myTTL = 30; //minutes expired jwt
+               $myTTL = 360; //minutes expired jwt
                JWTAuth::factory()->setTTL($myTTL);
                try {
                     if (! $token = JWTAuth::attempt($credentials)) {

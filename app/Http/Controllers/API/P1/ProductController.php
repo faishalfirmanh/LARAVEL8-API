@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\P1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\P1\Product;
+use App\Models\P1\ProductImage;
 use Image;
 use File;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,151 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     public function uploadImage2Product($idprod,$p2,$isCreate){
+        $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_p2_'.$idprod.'.webp';
+        if ($isCreate === true) {
+            if($p2 != NULL){
+                $image_resize_p2 = Image::make($p2->getRealPath());  
+                $image_resize_p2->resize(400, 400);
+                $image_resize_p2->save(public_path('img_prod_p2/' .$name_image),40); 
+                $path_for_save = public_path('img_prod_p2/'). $name_image;
+                $final_path = path_save($path_for_save);
+                $img_prod = new ProductImage;
+                $img_prod->image_name = $name_image;
+                $img_prod->id_product = $idprod;
+                $img_prod->path = $final_path;
+                $img_prod->save();
+            }
+        }else{
+            if ($p2 != NULL) {
+                $data_img_prod = ProductImage::query()->where('id_product',$idprod)->where('image_name','like', '%' . 'p2' . '%')->first();
+              
+                $image_resize_p2 = Image::make($p2->getRealPath());  
+                $image_resize_p2->resize(400,400);
+                $path_for_save = public_path('img_prod_p2/'). $name_image;
+                $image_resize_p2->save(public_path('img_prod_p2/' .$name_image),40); 
+                $final_path = path_save($path_for_save);
+                if ($data_img_prod != NULL) {
+                    //if file available
+                    $name_img =  $data_img_prod->image_name;
+                    $cek_file_p2 = File::exists(public_path('img_prod_p2/'.$name_img));
+                    if ($cek_file_p2) {
+                        unlink(public_path('img_prod_p2')."/".$name_img);
+                    }
+                    //if file available
+                    $data_img_prod->image_name = $name_image;
+                    $data_img_prod->path = $final_path;
+                    $data_img_prod->save();
+                   
+                }else{
+                    $img_prod = new ProductImage();
+                    $img_prod->image_name = $name_image;
+                    $img_prod->id_product = $idprod;
+                    $img_prod->path = $final_path;
+                    $img_prod->save();
+                   
+                }
+            }
+        }
+        
+     }
+     
+     public function uploadImage3Product($idprod,$p3,$isCreate){
+        $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_p3_'.$idprod.'.webp';
+        if ($isCreate === true) {
+            if($p3 != NULL){
+                $image_resize_p3 = Image::make($p3->getRealPath());  
+                $image_resize_p3->resize(400, 400);
+                $image_resize_p3->save(public_path('img_prod_p3/' .$name_image),40); 
+                $path_for_save = public_path('img_prod_p3/'). $name_image;
+                $final_path = path_save($path_for_save);
+                $img_prod = new ProductImage;
+                $img_prod->image_name = $name_image;
+                $img_prod->id_product = $idprod;
+                $img_prod->path = $final_path;
+                $img_prod->save();
+            }
+        }else{
+            if ($p3 != NULL) {
+                $data_img_prod = ProductImage::query()->where('id_product',$idprod)->where('image_name','like', '%' . 'p3' . '%')->first();
+              
+                $image_resize_p3 = Image::make($p3->getRealPath());  
+                $image_resize_p3->resize(400,400);
+                $path_for_save = public_path('img_prod_p3/'). $name_image;
+                $image_resize_p3->save(public_path('img_prod_p3/' .$name_image),40); 
+                $final_path = path_save($path_for_save);
+                if ($data_img_prod != NULL) {
+                    //if file available
+                    $name_img =  $data_img_prod->image_name;
+                    $cek_file_p3 = File::exists(public_path('img_prod_p3/'.$name_img));
+                    if ($cek_file_p3) {
+                        unlink(public_path('img_prod_p3')."/".$name_img);
+                    }
+                    //if file available
+                    $data_img_prod->image_name = $name_image;
+                    $data_img_prod->path = $final_path;
+                    $data_img_prod->save();
+                   
+                }else{
+                    $img_prod = new ProductImage();
+                    $img_prod->image_name = $name_image;
+                    $img_prod->id_product = $idprod;
+                    $img_prod->path = $final_path;
+                    $img_prod->save();
+                   
+                }
+            }
+        }
+        
+     }
+     public function uploadImage1Product($idprod,$p1,$isCreate){
+        $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_p1_'.$idprod.'.webp';
+       if ($isCreate === true) {
+            if($p1 != NULL) {
+                $image_resize_p1 = Image::make($p1->getRealPath());  
+                $image_resize_p1->resize(400,400);
+                $path_for_save = public_path('img_prod_p1/'). $name_image;
+                $image_resize_p1->save(public_path('img_prod_p1/' .$name_image),40); 
+                $final_path = path_save($path_for_save);
+                $img_prod = new ProductImage();
+                $img_prod->image_name = $name_image;
+                $img_prod->id_product = $idprod;
+                $img_prod->path = $final_path;
+                $img_prod->save();
+            }
+       }else{
+            if ($p1 != NULL) {
+                $data_img_prod = ProductImage::query()->where('id_product',$idprod)->where('image_name','like', '%' . 'p1' . '%')->first();
+              
+                $image_resize_p1 = Image::make($p1->getRealPath());  
+                $image_resize_p1->resize(400,400);
+                $path_for_save = public_path('img_prod_p1/'). $name_image;
+                $image_resize_p1->save(public_path('img_prod_p1/' .$name_image),40); 
+                $final_path = path_save($path_for_save);
+                if ($data_img_prod != NULL) {
+                    //if file available
+                    $name_img =  $data_img_prod->image_name;
+                    $cek_file_p1 = File::exists(public_path('img_prod_p1/'.$name_img));
+                    if ($cek_file_p1) {
+                        unlink(public_path('img_prod_p1')."/".$name_img);
+                    }
+                    //if file available
+                    $data_img_prod->image_name = $name_image;
+                    $data_img_prod->path = $final_path;
+                    $data_img_prod->save();
+                   
+                }else{
+                    $img_prod = new ProductImage();
+                    $img_prod->image_name = $name_image;
+                    $img_prod->id_product = $idprod;
+                    $img_prod->path = $final_path;
+                    $img_prod->save();
+                   
+                }
+            }
+       }
+    }
     public function store(Request $request)
     {
         //
@@ -54,7 +200,7 @@ class ProductController extends Controller
         if ($img != NULL) {
             $width_img = Image::make($img->getRealPath())->width();
             $height_img =  Image::make($img->getRealPath())->height();
-            $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$name.'.jpg';
+            $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$name.'.webp';
             $image_resize = Image::make($img->getRealPath());  
             $image_resize->resize(200, 200);
             //$image_resize->crop(200, 200);
@@ -65,8 +211,17 @@ class ProductController extends Controller
             $product->price = $price;
             $product->picture = $name_image;
             if ($product->save()) {
+                $idProd = $product->id;
+                $p1 = $request->file('image_p1');
+                $p2 = $request->file('image_p2');
+                $p3 = $request->file('image_p3');
+                $isCreate = true;
+                $this->uploadImage1Product($idProd,$p1,$isCreate);
+                $this->uploadImage2Product($idProd,$p2,$isCreate);
+                $this->uploadImage3Product($idProd,$p3,$isCreate);
                 return response()->json([
                     'message' => 'success create',
+                    'product_id_insert'=>$product->id
                 ],200);  
             }
         }else{
@@ -89,12 +244,25 @@ class ProductController extends Controller
     public function show($id)
     {
         //
-        return response()->json([
-            'message' => 'delete successfully',
-            'validation'=>[
-                'msg1'=> 'image already deleted'
-            ]
-        ],200);
+        $prod = Product::find($id);
+        $other_image = ProductImage::query()->where('id_product',$id)->get();
+        if ($prod != NULL) {
+            return response()->json([
+                'id_product'=>$id,
+                'message' => 'product  found',
+                'name_product' => $prod->name_product,
+                'price' =>$prod->price,
+                'img_front' => $prod->picture,
+                'image_other'=>[
+
+                ]
+            ],200);
+        }else{
+            return response()->json([
+                'id_product'=>$id,
+                'message' => 'id product '.$id.' not found'
+            ],400);
+        }
     }
 
     /**
@@ -123,6 +291,9 @@ class ProductController extends Controller
     public function updateProduct(Request $request)
     {
         $id = $request->id;
+        $p1 = $request->file('image_p1');
+        $p2 = $request->file('image_p2');
+        $p3 = $request->file('image_p3');
         $findProduct = Product::query()->where('id',$id)->first();
         if ($findProduct != NULL) {
             $search = Product::query()->where('id',$id)->first();
@@ -135,14 +306,14 @@ class ProductController extends Controller
                 if ($cek_file) {
                     unlink(public_path('image_product')."/".$img_name);
                     $img = $request->file('image');
-                    $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.jpg';
+                    $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.webp';
                     $image_resize = Image::make($img->getRealPath());  
                     $image_resize->resize(200, 200);
                     $image_resize->save(public_path('image_product/' .$name_image),40);
                     $search->picture = $name_image;
                 }else{
                     $img = $request->file('image');
-                    $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.jpg';
+                    $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.webp';
                     $image_resize = Image::make($img->getRealPath());  
                     $image_resize->resize(200, 200);
                     $image_resize->save(public_path('image_product/' .$name_image),40);
@@ -162,9 +333,15 @@ class ProductController extends Controller
                 }
                 
             }
+            $isCreate = false;
+            $this->uploadImage1Product($id,$p1,$isCreate);
+            $this->uploadImage2Product($id,$p2,$isCreate);
+            $this->uploadImage3Product($id,$p3,$isCreate);
+           
             if ($search->save()) {
                 return response()->json([
                     'message' => 'update successfully',
+                    'id_product'=>$id
                 ],200);
             }else{
                 return response()->json([
