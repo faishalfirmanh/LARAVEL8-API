@@ -8,6 +8,7 @@ use App\Models\P1\Product;
 use App\Models\P1\ProductImage;
 use Image;
 use File;
+use App\Models\P1\UserApi;
 use Illuminate\Support\Facades\DB;
 use Validator;
 class ProductController extends Controller
@@ -208,6 +209,21 @@ class ProductController extends Controller
             $image_resize->save(public_path('image_product/' .$name_image),40); //upload image image intervention
             $product = new Product();
             $product->name_product = $name;
+            if ($request->description != NULL) {
+                $product->description  = $request->description;
+            }
+            if ($request->idUserLogin != null) {
+                $searchIdUserlogin = UserApi::query()->where('id',$request->idUserLogin)->first();
+                if ($searchIdUserlogin == NULL) {
+                    return response()->json([
+                        'message' => 'failed create',
+                        'validation'=>[
+                            'error'=> 'Id User Login Not found'
+                        ]
+                    ],404);   
+                }
+                $product->id_user = $request->idUserLogin;
+            }
             $product->price = $price;
             $product->picture = $name_image;
             if ($product->save()) {
@@ -337,7 +353,21 @@ class ProductController extends Controller
             $this->uploadImage1Product($id,$p1,$isCreate);
             $this->uploadImage2Product($id,$p2,$isCreate);
             $this->uploadImage3Product($id,$p3,$isCreate);
-           
+            if ($request->description != NULL) {
+                $search->description  = $request->description;
+            }
+            if ($request->idUserLogin != null) {
+                $searchIdUserlogin = UserApi::query()->where('id',$request->idUserLogin)->first();
+                if ($searchIdUserlogin == NULL) {
+                    return response()->json([
+                        'message' => 'failed update',
+                        'validation'=>[
+                            'error'=> 'Id User Login Not found'
+                        ]
+                    ],404);   
+                }
+                $search->id_user = $request->idUserLogin;
+            }
             if ($search->save()) {
                 return response()->json([
                     'message' => 'update successfully',

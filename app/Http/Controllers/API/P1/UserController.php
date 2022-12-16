@@ -122,7 +122,8 @@ class UserController extends BaseController
                     'message' => 'success login',
                     'email'=>$search_data->email,
                     'jwt_token'=>$token,
-                    'token_type' => 'Bearer'
+                    'token_type' => 'Bearer',
+                    'id_user'=> $search_data->id,
                 ],200);    
             }else{
                 return response()->json([
