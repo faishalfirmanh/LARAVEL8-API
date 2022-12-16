@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\P1\Product;
 use App\Models\P1\ProductImage;
+use App\Models\P1\Category;
 use Image;
 use File;
 use App\Models\P1\UserApi;
@@ -198,6 +199,7 @@ class ProductController extends Controller
         $name = $request->name;
         $img = $request->file('image');
         $price = $request->price;
+        $input_category = $request->id_category;
         if ($img != NULL) {
             $width_img = Image::make($img->getRealPath())->width();
             $height_img =  Image::make($img->getRealPath())->height();
@@ -226,6 +228,18 @@ class ProductController extends Controller
             }
             $product->price = $price;
             $product->picture = $name_image;
+            if ($input_category != NULL) {
+               $searchCategory =  Category::query()->where('id',$input_category)->first();
+               if ($searchCategory == NULL) {
+                    return response()->json([
+                        'message' => 'failed create',
+                        'validation'=>[
+                            'error'=> 'Id Category Not found'
+                        ]
+                    ],404);   
+               }
+               $product->id_category = $input_category;
+            }
             if ($product->save()) {
                 $idProd = $product->id;
                 $p1 = $request->file('image_p1');
@@ -310,6 +324,7 @@ class ProductController extends Controller
         $p1 = $request->file('image_p1');
         $p2 = $request->file('image_p2');
         $p3 = $request->file('image_p3');
+        $input_category = $request->id_category;
         $findProduct = Product::query()->where('id',$id)->first();
         if ($findProduct != NULL) {
             $search = Product::query()->where('id',$id)->first();
@@ -368,6 +383,18 @@ class ProductController extends Controller
                 }
                 $search->id_user = $request->idUserLogin;
             }
+            if ($input_category != NULL) {
+                $searchCategory =  Category::query()->where('id',$input_category)->first();
+                if ($searchCategory == NULL) {
+                     return response()->json([
+                         'message' => 'failed update',
+                         'validation'=>[
+                             'error'=> 'Id Category Not found'
+                         ]
+                     ],404);   
+                }
+                $search->id_category = $input_category;
+             }
             if ($search->save()) {
                 return response()->json([
                     'message' => 'update successfully',
