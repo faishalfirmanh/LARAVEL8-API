@@ -50,7 +50,25 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-   
+
+     public function deleteLinkMarketPlace(Request $request){
+        if (cek_LinkMarketById($request->id) != 'null link') {
+            DB::table('p1_productlinkonlineshop')->where('id', $request->id)->delete();
+                return response()->json([
+                    'message' => 'delete link onlineshop product successfully',
+                    'validation'=>[
+                        'id_link'=>$request->id
+                    ]
+                ],200);
+        }else{
+            return response()->json([
+                'message' => 'delete link onlineshop product failed',
+                'validation'=>[
+                    'id_link'=> 'id '.$request->id .' not found'
+                ]
+            ],400);
+        }
+     }
 
      public function addLinkMarketplaceToProduct(Request $request){
        

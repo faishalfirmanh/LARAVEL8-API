@@ -31,6 +31,7 @@ Route::group(['middleware' => ['jwt.verify']], function() { //jwt
     Route::post('delete_products',[ProductController::class,'deleteProduct']);//use
     Route::post('update_products',[ProductController::class,'updateProduct']);
     Route::post('linkProduct', [ProductController::class, 'addLinkMarketplaceToProduct']);
+    Route::post('deleteLinkProduct', [ProductController::class, 'deleteLinkMarketPlace']);
     Route::post('logout_api', [UserController::class, 'logoutApi']);
 });
 Route::get('coba', [ProductController::class, 'addLinkMarketplaceToProduct']);
