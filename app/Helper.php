@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use App\Models\P1\ProductImage;
 use App\Models\P1\OnlineShop;
 use App\Models\P1\Product;
+use App\Models\P1\LinkOnlineShopProduct;
 use Intervention\Image\Facades\Image as Image;
 use League\Flysystem\Filesystem;
 
@@ -35,6 +36,17 @@ if (!function_exists('cek_marketplaceById')) { //if null marketplace
             return $cek;
         }   
    }
+}
+
+if (!function_exists('cek_LinkMarketById')) { 
+    function cek_LinkMarketById($id){
+        $cek = LinkOnlineShopProduct::query()->where('id',$id)->first();
+        if ($cek == NULL) {
+            return 'null link';
+        }else{
+           return $cek;
+        }   
+    }
 }
 
 if (!function_exists('cek_ProductById')) { 

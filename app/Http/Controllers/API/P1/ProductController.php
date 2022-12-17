@@ -52,11 +52,14 @@ class ProductController extends Controller
      */
    
 
-     public function addLinkMarketplaceToProduct(){
-        $idOnlineShop = 22;
-        $idProd = 50;
-        $url = 'wwww';
-        $isCreate = true;
+     public function addLinkMarketplaceToProduct(Request $request){
+       
+        $idOnlineShop = $request->idOnlineShop;
+        $idProd = $request->idProd;
+        $url = $request->url;
+        $isCreate = $request->isCreate;
+        $id_link = $request->idlink;
+
         //--------cek data is null----------
         if (cek_ProductById($idProd) == 'null product') {
             return response()->json([
@@ -76,8 +79,7 @@ class ProductController extends Controller
         }
          //--------cek data is null----------
         $searchAllData = LinkOnlineShopProduct::query()->where('id_onlineshop',$idOnlineShop)->where('id_product',$idProd)->get();
-        $searchFirstData = LinkOnlineShopProduct::query()->where('id_onlineshop',$idOnlineShop)->where('id_product',$idProd)->first();
-        if ($isCreate) {
+        if ($isCreate == '1') {//create
             if (count($searchAllData)<1) {
                 $linkToMarket = new LinkOnlineShopProduct;
                 $linkToMarket->id_onlineshop = $idOnlineShop;
@@ -103,20 +105,54 @@ class ProductController extends Controller
                     ],
                 ],200);
             }
-        }else{
-            if ($searchFirstData->id_onlineshop == $idOnlineShop) {
-               
+        }else{//edit
+            $searchFirstData = LinkOnlineShopProduct::query()->where('id',$id_link)->first();
+            if (cek_LinkMarketById($id_link) == 'null link') {
+                return response()->json([
+                    'message' => 'id link marketplace no found',
+                    'validation'=>[
+                        'id'=> $id_link
+                    ]
+                ],404);
             }
-            if ($searchFirstData->id_product == $idProd) {
-                
+            //compare by input and id is not myself
+            $cobaLagi =  LinkOnlineShopProduct::query()->where('id_onlineshop',$idOnlineShop)->where('id_product',$idProd)->where('id','!=',$id_link)->first();
+            
+            if ($idOnlineShop != $searchFirstData->id_onlineshop || $idProd != $searchFirstData->id_product) {
+                if (count($searchAllData)> 1) { //jika semua data
+                    return response()->json([
+                        'message' => 'failed update link product',
+                        'validation'=>[
+                            'msg1'=> 'one product has only one online store link',
+                        ]
+                    ],400);
+                }else if(count($searchAllData) == 1) { //jika ada data double
+                   if ($cobaLagi != NULL) {
+                        return response()->json([
+                            'message' => 'failed update link product',
+                            'validation'=>[
+                                'msg1'=> 'one product has only one online store link',
+                            ]
+                        ],400);
+                   }
+                }
             }
-            return response()->json([
-                'message' => 'update new link product successfully',
-                'validation'=>[
-                    'name_product'=> cek_ProductById($idProd)->name_product,
-                    'name_market'=>cek_marketplaceById($idOnlineShop)->name
-                ]
-            ],200);
+
+            $searchFirstData->id_onlineshop = $idOnlineShop;
+            $searchFirstData->id_product = $idProd;
+          
+            if (!empty($url)){
+                $searchFirstData->url = $url;
+            }
+            if ($searchFirstData->save()) {
+                return response()->json([
+                    'message' => 'update new link product successfully',
+                    'validation'=>[
+                        'name_product'=> cek_ProductById($idProd)->name_product,
+                        'name_market'=>cek_marketplaceById($idOnlineShop)->name
+                    ]
+                ],200);
+            }
         }
      }
 
