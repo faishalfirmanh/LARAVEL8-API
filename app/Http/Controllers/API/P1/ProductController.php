@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\P1\Product;
 use App\Models\P1\ProductImage;
 use App\Models\P1\Category;
+use App\Models\P1\OnlineShop;
+use App\Models\P1\LinkOnlineShopProduct;
 use Image;
 use File;
 use App\Models\P1\UserApi;
@@ -48,6 +50,75 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+   
+
+     public function addLinkMarketplaceToProduct(){
+        $idOnlineShop = 22;
+        $idProd = 50;
+        $url = 'wwww';
+        $isCreate = true;
+        //--------cek data is null----------
+        if (cek_ProductById($idProd) == 'null product') {
+            return response()->json([
+                'message' => 'product no found',
+                'validation'=>[
+                    'id_product'=> $idProd
+                ]
+            ],404);
+        }
+        if(cek_marketplaceById($idOnlineShop) == 'null marketplace') {
+            return response()->json([
+                'message' => 'marketplace no found',
+                'validation'=>[
+                    'id'=> $idOnlineShop
+                ]
+            ],404);
+        }
+         //--------cek data is null----------
+        $searchAllData = LinkOnlineShopProduct::query()->where('id_onlineshop',$idOnlineShop)->where('id_product',$idProd)->get();
+        $searchFirstData = LinkOnlineShopProduct::query()->where('id_onlineshop',$idOnlineShop)->where('id_product',$idProd)->first();
+        if ($isCreate) {
+            if (count($searchAllData)<1) {
+                $linkToMarket = new LinkOnlineShopProduct;
+                $linkToMarket->id_onlineshop = $idOnlineShop;
+                $linkToMarket->id_product = $idProd;
+                $linkToMarket->url = $url;
+                if ($linkToMarket->save()){
+                    return response()->json([
+                        'message' => 'create new link product successfully',
+                        'validation'=>[
+                            'name_product'=> cek_ProductById($idProd)->name_product,
+                            'name_market'=>cek_marketplaceById($idOnlineShop)->name
+                        ]
+                    ],200);
+                }
+            }else{
+                return response()->json([
+                    'message' => 'failed create new link product',
+                    'validation'=>[
+                        'msg_1'=>'one product has only one online store link',
+                        'name_market'=>cek_marketplaceById($idOnlineShop)->name,
+                        'name_product'=>cek_ProductById($idProd)->name_product,
+                        'notif'=> 'is already registered'
+                    ],
+                ],200);
+            }
+        }else{
+            if ($searchFirstData->id_onlineshop == $idOnlineShop) {
+               
+            }
+            if ($searchFirstData->id_product == $idProd) {
+                
+            }
+            return response()->json([
+                'message' => 'update new link product successfully',
+                'validation'=>[
+                    'name_product'=> cek_ProductById($idProd)->name_product,
+                    'name_market'=>cek_marketplaceById($idOnlineShop)->name
+                ]
+            ],200);
+        }
+     }
 
      public function uploadImage2Product($idprod,$p2,$isCreate){
         $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_p2_'.$idprod.'.webp';

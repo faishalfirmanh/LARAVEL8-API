@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Request;
 use Carbon\Carbon;
 use App\Models\P1\ProductImage;
+use App\Models\P1\OnlineShop;
+use App\Models\P1\Product;
 use Intervention\Image\Facades\Image as Image;
 use League\Flysystem\Filesystem;
 
@@ -22,3 +24,26 @@ if(!function_exists('path_save')){
         return $base_url;
     }
 }
+
+//helper tidak bisa mengembalikan json
+if (!function_exists('cek_marketplaceById')) { //if null marketplace
+   function cek_marketplaceById($id){
+        $cek = OnlineShop::query()->where('id',$id)->first();
+        if ($cek == NULL) {
+            return 'null marketplace';
+        }else{
+            return $cek;
+        }   
+   }
+}
+
+if (!function_exists('cek_ProductById')) { 
+    function cek_ProductById($id){
+         $cek = Product::query()->where('id',$id)->first();
+         if ($cek == NULL) {
+             return 'null product';
+         }else{
+            return $cek;
+         }   
+    }
+ }
