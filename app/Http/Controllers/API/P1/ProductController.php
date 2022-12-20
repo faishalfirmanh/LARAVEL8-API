@@ -22,22 +22,29 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDataProduct(Request $request)
+    public function getDataAllProduct(Request $request)//all product with param page
     {
-        $page = $request->page;
+        $page = intval($request->page);
         if ($page == null) $page = 1;
         $category = $request->category;
         $limit = 5;
-        $data = Product::query()->get();
+        $img_product =  url('/').'/'.'image_product'.'/';
+        
+        $all_data = Product::query()->select('name_product','picture','price')->get();
+        $data = Product::query()->select('id','name_product','picture','price')->limit($limit)->paginate($limit);
+       // $data_limit_get =  $all_data = Product::query()->select('name_product','picture','price')->get();
         $var = array();
         foreach ($data as $key) {
+           $key->name_product;
+           $key->picture = $img_product.$key->picture;
+           $key->price = "Rp ". number_format($key->price,2);
            array_push($var,$key);
         }
-        $total_page = count($var) / $limit;
+        $total_page = (count($all_data) / $limit)+1;
         return response()->json([
-            'data' => '',
+            'data' => $var,
             'meta'=>[
-                'total_data'=>count($var),
+                'total_data'=>count($all_data),
                 'perpage'=>intval($limit),
                 'current_page'=>$page,
                 'total_page' => intval($total_page),
