@@ -12,6 +12,7 @@ use App\Models\P1\LinkOnlineShopProduct;
 use Image;
 use File;
 use App\Models\P1\UserApi;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Validator;
 class ProductController extends Controller
@@ -21,17 +22,78 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getDataProduct(Request $request)
     {
-        //
+        $page = $request->page;
+        if ($page == null) $page = 1;
+        $category = $request->category;
+        $limit = 5;
         $data = Product::query()->get();
         $var = array();
         foreach ($data as $key) {
            array_push($var,$key);
         }
+        $total_page = count($var) / $limit;
         return response()->json([
-            'data' => $var,
+            'data' => '',
+            'meta'=>[
+                'total_data'=>count($var),
+                'perpage'=>intval($limit),
+                'current_page'=>$page,
+                'total_page' => intval($total_page),
+            ]
         ],200);
+    }
+    public function getDataProductById(Request $request){//detail product
+        $id = $request->id;
+        $product = Product::find($id);
+        if (cek_ProductById($id) == 'null product') {
+            return response()->json([
+                'message' => 'product no found',
+                'validation'=>[
+                    'id_product'=> $id
+                ]
+            ],404);
+        }
+       
+        $img = $product->listImageProduct;
+        $list_Img = array();
+        foreach ($img as $key) {
+            array_push($list_Img, $key->path);
+        }
+
+        $link = $product->listUrlOnlineShop;
+        $list_Url = array();
+        $list_nameMarket = array();
+        
+        foreach ($link as $key) {
+            array_push($list_Url, $key->url);
+            if (cek_NameMareketBaseOnUrl($key->url) != NULL) {
+                array_push($list_nameMarket,cek_NameMareketBaseOnUrl($key->url));
+            }
+
+        }
+        $key_value_marketplace = array_combine($list_nameMarket,$list_Url);
+       
+        
+        return response()->json([
+            'message' => 'product found',
+            'name user'=> cek_nameUserById($product->id_user),
+            'category_product'=>cek_CategoryProductById($product->id_category),
+            'name_product'=>$product->name_product,
+            'price'=>$product->price,
+            'description'=>$product->description,
+            'image'=> $list_Img,
+            'marketplace'=>$key_value_marketplace
+        ],200);
+       
+      
+       
+    }
+    public function index(Request $request)
+    {
+        //
+       
     }
 
     /**

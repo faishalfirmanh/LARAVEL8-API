@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Request;
 use Carbon\Carbon;
 use App\Models\P1\ProductImage;
 use App\Models\P1\OnlineShop;
+use App\Models\P1\UserApi;
+use App\Models\P1\Category;
 use App\Models\P1\Product;
 use App\Models\P1\LinkOnlineShopProduct;
 use Intervention\Image\Facades\Image as Image;
@@ -49,6 +51,17 @@ if (!function_exists('cek_LinkMarketById')) {
     }
 }
 
+if (!function_exists('cek_CategoryProductById')) { 
+    function cek_CategoryProductById($id){
+         $cek = Category::query()->where('id',$id)->first();
+         if ($cek == NULL) {
+             return null;
+         }else{
+            return $cek->name;
+         }   
+    }
+ }
+
 if (!function_exists('cek_ProductById')) { 
     function cek_ProductById($id){
          $cek = Product::query()->where('id',$id)->first();
@@ -57,5 +70,34 @@ if (!function_exists('cek_ProductById')) {
          }else{
             return $cek;
          }   
+    }
+ }
+
+ if (!function_exists('cek_nameUserById')) {
+    function cek_nameUserById($id){
+        $cek = UserApi::find($id);
+        if ($cek != NULL) {
+           return $cek->name;
+        }else{
+            return null;
+        }
+    }
+ }
+
+ if (!function_exists('cek_NameMareketBaseOnUrl')) { 
+    function cek_NameMareketBaseOnUrl($name){
+        if (strpos($name, 'tokopedia') !== false) {
+           return "tokopedia";
+        }else if (strpos($name, 'bukalapak') !== false) {
+            return "bukalapak";
+        }else if (strpos($name, 'shopee') !== false) {
+            return "shopee";
+        }else if (strpos($name, 'blibli') !== false) {
+            return "blibli";
+        }else if (strpos($name, 'lazada') !== false) {
+            return "lazada";
+        }else{
+            return null;
+        }
     }
  }
