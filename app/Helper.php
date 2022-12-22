@@ -12,6 +12,7 @@ use Intervention\Image\Facades\Image as Image;
 use League\Flysystem\Filesystem;
 
 
+//1
 if(!function_exists('path_save')){
     function path_save($path){
         $path_img_brief = base_path($path);
@@ -26,6 +27,21 @@ if(!function_exists('path_save')){
         $base_url = url('/').'/'.$to_str_;
         return $base_url;
     }
+}
+
+//2
+if(!function_exists('cekStringSubCobalagi')){ //untuk sub domain hapus path cobalgip1/public
+    function cekStringSubCobalagi($url){
+        if (strpos($url, 'cobalagip1') !== false) {
+           $toar = explode(".",$url);
+           $replace_fix = str_replace("public/","",str_replace("cobalagip1/","",$toar[2]));
+           $toar[2] = $replace_fix;
+           $final_path = implode(".",$toar);
+           return $final_path;
+        }else{
+           return $url;
+        }
+     }
 }
 
 //helper tidak bisa mengembalikan json

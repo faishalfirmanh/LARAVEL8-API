@@ -251,7 +251,7 @@ class ProductController extends Controller
                 $image_resize_p2->resize(400, 400);
                 $image_resize_p2->save(public_path('img_prod_p2/' .$name_image),40); 
                 $path_for_save = public_path('img_prod_p2/'). $name_image;
-                $final_path = path_save($path_for_save);
+                $final_path = cekStringSubCobalagi(path_save($path_for_save));
                 $img_prod = new ProductImage;
                 $img_prod->image_name = $name_image;
                 $img_prod->id_product = $idprod;
@@ -266,7 +266,7 @@ class ProductController extends Controller
                 $image_resize_p2->resize(400,400);
                 $path_for_save = public_path('img_prod_p2/'). $name_image;
                 $image_resize_p2->save(public_path('img_prod_p2/' .$name_image),40); 
-                $final_path = path_save($path_for_save);
+                $final_path = cekStringSubCobalagi(path_save($path_for_save));
                 if ($data_img_prod != NULL) {
                     //if file available
                     $name_img =  $data_img_prod->image_name;
@@ -300,7 +300,7 @@ class ProductController extends Controller
                 $image_resize_p3->resize(400, 400);
                 $image_resize_p3->save(public_path('img_prod_p3/' .$name_image),40); 
                 $path_for_save = public_path('img_prod_p3/'). $name_image;
-                $final_path = path_save($path_for_save);
+                $final_path = cekStringSubCobalagi(path_save($path_for_save));
                 $img_prod = new ProductImage;
                 $img_prod->image_name = $name_image;
                 $img_prod->id_product = $idprod;
@@ -348,7 +348,7 @@ class ProductController extends Controller
                 $image_resize_p1->resize(400,400);
                 $path_for_save = public_path('img_prod_p1/'). $name_image;
                 $image_resize_p1->save(public_path('img_prod_p1/' .$name_image),40); 
-                $final_path = path_save($path_for_save);
+                $final_path = cekStringSubCobalagi(path_save($path_for_save));
                 $img_prod = new ProductImage();
                 $img_prod->image_name = $name_image;
                 $img_prod->id_product = $idprod;
@@ -363,7 +363,7 @@ class ProductController extends Controller
                 $image_resize_p1->resize(400,400);
                 $path_for_save = public_path('img_prod_p1/'). $name_image;
                 $image_resize_p1->save(public_path('img_prod_p1/' .$name_image),40); 
-                $final_path = path_save($path_for_save);
+                $final_path = cekStringSubCobalagi(path_save($path_for_save));
                 if ($data_img_prod != NULL) {
                     //if file available
                     $name_img =  $data_img_prod->image_name;
