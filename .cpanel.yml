@@ -1,0 +1,16 @@
+---
+deployment:
+  tasks:
+    -export DEPLOYMENT=/home/u1575165/public_html/cobalagip1/
+    -/bin/cp composer.json $DEPLOYMENT
+    -/bin/cp package.json $DEPLOYMENT
+    -/bin/cp phpunit.xml $DEPLOYMENT
+    -/bin/cp -R app $DEPLOYMENT
+    -/bin/cp -R bootstrap $DEPLOYMENT
+    -/bin/cp -R database $DEPLOYMENT
+    -/bin/cp -R public $DEPLOYMENT
+    -/bin/cp -R resources $DEPLOYMENT
+    -/bin/cp -R routes $DEPLOYMENT
+    -/bin/cp -R storage $DEPLOYMENT
+    -/bin/cp -R tests $DEPLOYMENT
+    -/bin/cp -R vendor $DEPLOYMENT
