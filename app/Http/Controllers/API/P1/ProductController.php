@@ -402,7 +402,7 @@ class ProductController extends Controller
             $image_resize->resize(200, 200);
             //$image_resize->crop(200, 200);
             //$img->move(public_path('storage/image_product'), $name_image); //upload image laravel
-            $image_resize->save(public_path('image_product/' .$name_image),40); //upload image image intervention
+            $image_resize->save(public_path('image_product/' .cekStringAvailableSpace($name_image)),40); //upload image image intervention
             $product = new Product();
             $product->name_product = $name;
             if ($request->description != NULL) {
@@ -531,14 +531,14 @@ class ProductController extends Controller
                 if ($cek_file) {
                     unlink(public_path('image_product')."/".$img_name);
                     $img = $request->file('image');
-                    $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.webp';
+                    $name_image = cekStringAvailableSpace(str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.webp');
                     $image_resize = Image::make($img->getRealPath());  
                     $image_resize->resize(200, 200);
                     $image_resize->save(public_path('image_product/' .$name_image),40);
                     $search->picture = $name_image;
                 }else{
                     $img = $request->file('image');
-                    $name_image = str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.webp';
+                    $name_image = cekStringAvailableSpace(str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.webp');
                     $image_resize = Image::make($img->getRealPath());  
                     $image_resize->resize(200, 200);
                     $image_resize->save(public_path('image_product/' .$name_image),40);

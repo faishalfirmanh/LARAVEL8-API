@@ -44,6 +44,17 @@ if(!function_exists('cekStringSubCobalagi')){ //untuk sub domain hapus path coba
      }
 }
 
+//cek string space replace with _
+if (!function_exists('cekStringAvailableSpace')) {
+    function cekStringAvailableSpace($string){
+        if ( preg_match('/\s/',$string) ){
+            return str_replace(" ","_",$string);
+        } else {
+            return $string;
+        }
+    }
+}
+
 //helper tidak bisa mengembalikan json
 if (!function_exists('cek_marketplaceById')) { //if null marketplace
    function cek_marketplaceById($id){
