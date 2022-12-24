@@ -421,7 +421,7 @@ class ProductController extends Controller
                 $product->id_user = $request->idUserLogin;
             }
             $product->price = $price;
-            $product->picture = $name_image;
+            $product->picture = cekStringAvailableSpace($name_image);
             if ($input_category != NULL) {
                $searchCategory =  Category::query()->where('id',$input_category)->first();
                if ($searchCategory == NULL) {
@@ -535,14 +535,14 @@ class ProductController extends Controller
                     $image_resize = Image::make($img->getRealPath());  
                     $image_resize->resize(200, 200);
                     $image_resize->save(public_path('image_product/' .$name_image),40);
-                    $search->picture = $name_image;
+                    $search->picture = cekStringAvailableSpace($name_image);
                 }else{
                     $img = $request->file('image');
                     $name_image = cekStringAvailableSpace(str_replace(':','',str_replace(' ','_',str_replace('-','',date('Y-m-d h:i:s')))).'_'.$request->name_product.'.webp');
                     $image_resize = Image::make($img->getRealPath());  
                     $image_resize->resize(200, 200);
                     $image_resize->save(public_path('image_product/' .$name_image),40);
-                    $search->picture = $name_image;
+                    $search->picture = cekStringAvailableSpace($name_image);
                 }
             }
             if ($request->price != NULL) {
