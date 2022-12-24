@@ -34,7 +34,7 @@ Route::group(['middleware' => ['jwt.verify']], function() { //jwt
     Route::post('deleteLinkProduct', [ProductController::class, 'deleteLinkMarketPlace']);
     Route::post('logout_api', [UserController::class, 'logoutApi']);
 });
-Route::get('coba', [ProductController::class, 'addLinkMarketplaceToProduct']);
+
 
 Route::get('get_product_by_id', [ProductController::class, 'getDataProductById']);//use
 Route::get('get_product_all', [ProductController::class, 'getDataAllProduct']);//use

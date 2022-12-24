@@ -652,6 +652,12 @@ class ProductController extends Controller
     public function deleteProduct(Request $request)
     {
         $search = Product::query()->where('id',$request->id)->first();
+        $searchLinkByIdProd = LinkOnlineShopProduct::query()->where('id_product',$request->id)->get();
+        if (sizeof($searchLinkByIdProd)>0) {
+           foreach ($searchLinkByIdProd as $key) {
+                LinkOnlineShopProduct::where('id',$key->id)->delete();
+           }
+        }
         if ($search != NULL) {
             $img_name = $search->picture;
             $cek_file = File::exists(public_path('image_product/'.$img_name));
@@ -665,7 +671,8 @@ class ProductController extends Controller
                     'message' => 'delete successfully',
                     'validation'=>[
                         'msg1'=> 'main image already deleted',
-                        'id_product'=>$request->id
+                        'id_product'=>$request->id,
+                        'total_linkmarket_productdeleted'=> sizeof($searchLinkByIdProd),
                     ]
                 ],200);
                 
@@ -675,7 +682,8 @@ class ProductController extends Controller
                     'message' => 'delete successfully',
                     'validation'=>[
                         'msg1'=> 'image not found',
-                        'id_product'=>$request->id
+                        'id_product'=>$request->id,
+                        'total_linkmarket_productdeleted'=> sizeof($searchLinkByIdProd),
                     ]
                 ],200);
             }
