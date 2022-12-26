@@ -22,6 +22,61 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function searchProduct(Request $request)
+    {
+         $limit = 5;
+         $input_keyword = $request->keyword;
+         $page = $request->page == null ? 1 : $request->page;
+         if (!empty($input_keyword)) {
+            $all_data = Product::query()
+                ->select('p1_product.id','p1_product.name_product','p1_product.id_category','p1_product.description', 'p1_category_product.id','p1_category_product.name')
+                ->join('p1_category_product','p1_product.id_category','p1_category_product.id')
+                ->where('p1_product.name_product','like','%'.$input_keyword.'%')
+                ->orWhere('p1_product.description','like','%'.$input_keyword.'%')
+                ->orWhere('p1_category_product.name', 'like','%'.$input_keyword.'%')
+                ->get();
+            $data = Product::query()
+            ->select('p1_product.id','p1_product.price','p1_product.name_product','p1_product.id_category','p1_product.description', 'p1_category_product.id','p1_category_product.name')
+            ->join('p1_category_product','p1_product.id_category','p1_category_product.id')
+            ->where('p1_product.name_product','like','%'.$input_keyword.'%')
+            ->orWhere('p1_product.description','like','%'.$input_keyword.'%')
+            ->orWhere('p1_category_product.name', 'like','%'.$input_keyword.'%')
+            ->limit($limit)
+            ->paginate($limit);
+            // ->get();
+            $list_data_search_product = array();
+            $total_page = (count($all_data) / $limit);
+            
+            $ss = 0;
+            if (intval($total_page) < 1) {
+                $ss += 1; 
+            }else{
+                $ss = (count($all_data) / $limit)+1; 
+            }
+            if (sizeof($data)>0) {
+                foreach ($data as $key) {
+                    array_push($list_data_search_product,$key);
+                }
+                return response()->json([
+                    'message'=>'data found',
+                    'data' => $list_data_search_product,
+                    'meta'=>[
+                        'total_data'=>count($all_data),
+                        'perpage'=>intval($limit),
+                        'current_page'=>$page,
+                        'total_page' => intval($ss),
+                    ]
+                ],200);
+            }else{
+                return response()->json([
+                    'message'=>'data not found',
+                    'validation'=>[
+                        'condition'=> 'data not found or page is over'
+                    ]
+                ],404);
+            }
+        }
+    }
     public function getDataAllProduct(Request $request)//all product with param page
     {
         $page = intval($request->page);

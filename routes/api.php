@@ -38,3 +38,4 @@ Route::group(['middleware' => ['jwt.verify']], function() { //jwt
 
 Route::get('get_product_by_id', [ProductController::class, 'getDataProductById']);//use
 Route::get('get_product_all', [ProductController::class, 'getDataAllProduct']);//use
+Route::get('search_product', [ProductController::class, 'searchProduct']); //param page and keyword
