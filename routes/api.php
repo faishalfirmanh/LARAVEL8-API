@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\K1\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\P1\UserController;
@@ -34,8 +35,22 @@ Route::group(['middleware' => ['jwt.verify']], function() { //jwt
     Route::post('deleteLinkProduct', [ProductController::class, 'deleteLinkMarketPlace']);
     Route::post('logout_api', [UserController::class, 'logoutApi']);
 });
-
-
 Route::get('get_product_by_id', [ProductController::class, 'getDataProductById']);//use
 Route::get('get_product_all', [ProductController::class, 'getDataAllProduct']);//use
 Route::get('search_product', [ProductController::class, 'searchProduct']); //param page and keyword
+
+/** api K1 START */
+
+/**------ category start------- */
+/** --- testing repo patern--- */
+Route::get('get_category',[CategoryController::class,'index'])->name('get_category');
+Route::get('get_category_ParamId/{id}',[CategoryController::class,'getCategoryIdCon'])->name('get_category_byId');
+Route::get('get_category_ParamName/{name}',[CategoryController::class,'getCategoryByNameCon'])->name('get_category_byName');
+//for api----
+Route::get('get_category_id',[CategoryController::class,'getCategory_IdCon'])->name('get_category_id');
+Route::get('get_category_name',[CategoryController::class,'getCategory_NameCon'])->name('get_category_name');
+Route::post('post_category',[CategoryController::class,'postCategory_Con']);//->done
+Route::post('update_category',[CategoryController::class,'updateCategory_Con']);
+/**------ category end------- */
+
+/** api K1 END */

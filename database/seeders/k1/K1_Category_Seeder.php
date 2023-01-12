@@ -25,5 +25,9 @@ class K1_Category_Seeder extends Seeder
         $category_3 = new K1_Category();
         $category_3->name_category = 'Alat';
         $category_3->save();
+
+        $category_4 = new K1_Category();
+        $category_4->name_category = 'Bibit';
+        $category_4->save();
     }
 }
