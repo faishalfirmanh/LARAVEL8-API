@@ -8,4 +8,9 @@ interface CategoryService{
     public function getCategoryByNameService($name);
 
     public function postCategoryService($data);
+    public function updateCategoryService($data);
+    public function deleteCategoryService($data);
+
+    public function getCategoryIdServiceRequest($data);
+    public function getCategoryNameServiceRequest($data);
 }

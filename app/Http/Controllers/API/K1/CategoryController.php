@@ -41,9 +41,10 @@ class CategoryController extends Controller
         return $result;
     }
 
-    public function getCategory_IdCon(K1_Category_Request $request)
+    public function getCategory_IdCon(Request $request)
     {
-
+        $result = $this->categoryService->getCategoryIdServiceRequest($request);
+        return $result;
     }
 
     public function getCategory_NameCon(Request $request)
@@ -58,6 +59,12 @@ class CategoryController extends Controller
     }
     public function updateCategory_Con(Request $request)
     {
-
+        $result = $this->categoryService->updateCategoryService($request);
+        return $result;
+    }
+    public function deleteCategory_Con(Request $request)
+    {
+        $result = $this->categoryService->deleteCategoryService($request);
+        return $result;
     }
 }

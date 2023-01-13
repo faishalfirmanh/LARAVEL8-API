@@ -20,7 +20,7 @@ class CategoryRepositoryImplement implements CategoryRepository{
 
     public function getCategoryById($id)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->where('id',$id)->first();
     }
 
     public function getCategoryByName($name)
@@ -34,6 +34,19 @@ class CategoryRepositoryImplement implements CategoryRepository{
          return $model_save->fresh();
     }
 
+    public function updateCategory($id_category, $name)
+    {
+        $data = $this->model->where('id',$id_category)->first();
+        $data->name_category = $name;
+        $data->save();
+        return $data->fresh();
+    }
+
+    public function deleteCategory($id)
+    {
+        $model = $this->model->find($id);
+        return $model->delete();
+    }
     
 
 } 

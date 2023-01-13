@@ -47,10 +47,11 @@ Route::get('get_category',[CategoryController::class,'index'])->name('get_catego
 Route::get('get_category_ParamId/{id}',[CategoryController::class,'getCategoryIdCon'])->name('get_category_byId');
 Route::get('get_category_ParamName/{name}',[CategoryController::class,'getCategoryByNameCon'])->name('get_category_byName');
 //for api----
-Route::get('get_category_id',[CategoryController::class,'getCategory_IdCon'])->name('get_category_id');
+Route::get('get_category_id',[CategoryController::class,'getCategory_IdCon'])->name('get_category_id');//->done
 Route::get('get_category_name',[CategoryController::class,'getCategory_NameCon'])->name('get_category_name');
 Route::post('post_category',[CategoryController::class,'postCategory_Con']);//->done
-Route::post('update_category',[CategoryController::class,'updateCategory_Con']);
+Route::post('update_category',[CategoryController::class,'updateCategory_Con']);//->done
+Route::post('delete_category',[CategoryController::class,'deleteCategory_Con']);//->done
 /**------ category end------- */
 
 /** api K1 END */
