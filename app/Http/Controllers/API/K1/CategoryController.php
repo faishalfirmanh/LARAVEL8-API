@@ -49,7 +49,7 @@ class CategoryController extends Controller
 
     public function getCategory_NameCon(Request $request)
     {
-        
+        //tess
     }
 
     public function postCategory_Con(Request $request)
