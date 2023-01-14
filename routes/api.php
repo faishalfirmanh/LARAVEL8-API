@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\K1\CategoryController;
+use App\Http\Controllers\API\K1\SupplierController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\P1\UserController;
@@ -53,5 +54,16 @@ Route::post('post_category',[CategoryController::class,'postCategory_Con']);//->
 Route::post('update_category',[CategoryController::class,'updateCategory_Con']);//->done
 Route::post('delete_category',[CategoryController::class,'deleteCategory_Con']);//->done
 /**------ category end------- */
+
+/**---- supplier----- */
+
+Route::get('get_supplier',[SupplierController::class,'get_allSupplier_con']);
+Route::get('get_supplierById',[SupplierController::class,'get_SupplierById_con']);
+Route::get('ajax_getPhoneSupplier',[SupplierController::class,'ajaxGetPhoneSupplier']);
+Route::post('post_supplier',[SupplierController::class,'post_Supplier_con']);
+Route::post('update_supplier',[SupplierController::class,'update_Supplier_con']);
+Route::post('delete_supplier',[SupplierController::class,'delete_Supplier_con']);
+
+/**---- supplier----- */
 
 /** api K1 END */
