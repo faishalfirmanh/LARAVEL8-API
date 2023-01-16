@@ -5,7 +5,7 @@ use App\Http\Controllers\API\K1\SupplierController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\P1\UserController;
-use App\Http\Controllers\API\P1\ProductController;
+use App\Http\Controllers\API\K1\ProductController;
 use App\Models\User;
 
 /*
@@ -65,5 +65,13 @@ Route::post('update_supplier',[SupplierController::class,'update_Supplier_con'])
 Route::post('delete_supplier',[SupplierController::class,'delete_Supplier_con']);
 
 /**---- supplier----- */
+
+/**---- Product Start----- */
+Route::get('get_allProduct',[ProductController::class, 'getAllProduct_con']);
+Route::get('get_ProductByid',[ProductController::class, 'getProductById_con']);
+Route::post('post_Product',[ProductController::class, 'postProduct_con']);
+Route::post('update_Product',[ProductController::class, 'updateProduct_con']);
+Route::post('delete_Product',[ProductController::class, 'deleteProduct_con']);
+/**---- Product End----- */
 
 /** api K1 END */

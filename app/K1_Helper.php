@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Request;
 use Carbon\Carbon;
 
 use App\Models\k1\K1_Category;
+use App\Models\k1\K1_Product_supplier;
 use App\Models\k1\K1_Supplier;
 use PhpParser\Node\Stmt\Else_;
 
@@ -75,3 +76,24 @@ if (!function_exists('cekInputSupplierPt')) {
    }
 }
 
+if (!function_exists('searchAllSupplierInRelation')) { //ARRAY
+    function searchAllSupplierInRelation($idProduct){
+        $search = K1_Product_supplier::query()->where('id_product',$idProduct)->get();
+        if (sizeof($search)>0) {
+            return $search;
+        }else{
+            return null;
+        }
+    }
+ }
+
+ if (!function_exists('searchSupplierInRelationById')) {//FIRST
+    function searchSupplierInRelationById($idProduct){
+        $search = K1_Product_supplier::query()->where('id_product',$idProduct)->first();
+        if ($search != NULL) {
+            return $search;
+        }else{
+            return null;
+        }
+    }
+ }

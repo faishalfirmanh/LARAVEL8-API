@@ -15,7 +15,7 @@ class Createk1AlterK1Produc extends Migration
     {
         //
         Schema::table('k1_product', function($table) {
-            $table->string('expired_date')->nullable()->change();
+            $table->date('expired_date')->nullable()->change();
         });
     }
 
