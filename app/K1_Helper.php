@@ -122,6 +122,28 @@ if (!function_exists('searchAllSupplierInRelation')) { //ARRAY
     }
  }
 
+ if (!function_exists('getProductById')) {
+    function getProductById($idProd){
+        $data =  K1_Product::query()->where('id',$idProd)->first();
+        if ($data != NULL) {
+            return $data;
+        }else{
+            return null;
+        }
+    }
+ }
+
+ if (!function_exists('getProductByName')) {
+    function getProductByName($name){
+        $data =  K1_Product::query()->where('name_product',$name)->first();
+        if ($data != NULL) {
+            return $data;
+        }else{
+            return null;
+        }
+    }
+ }
+
  if (!function_exists('cekNameProduct')) {
     function cekNameProduct($name){
         $search = K1_Product::query()->where('name_product',$name)->first();
@@ -141,5 +163,62 @@ if (!function_exists('searchAllSupplierInRelation')) { //ARRAY
         }else{
             return null;
         }
+    }
+ }
+ /*** update product */
+ if (!function_exists('cekInputNameProd')){
+    function cekInputNameProd($data, $name){
+        if (!empty($name)) {
+            return $data->name_product = $name;
+        }
+        return $data->name_product = $data->name_product;
+    }
+ }
+ if (!function_exists('cekExpiredProd')){
+    function cekExpiredProd($data, $date){
+        if (!empty($date)) {
+            return $data->expired_date = $date;
+        }
+        return $data->expired_date = $data->expired_date;
+    }
+ }
+ if (!function_exists('cekInputCategoryProd')){
+    function cekInputCategoryProd($data, $idCategory){
+        if (!empty($idCategory)) {
+           return $data->id_category = $idCategory;
+        }
+        return $data->id_category = $data->id_category;
+    }
+ }
+ if (!function_exists('cekInputSupplierProd')){
+    function cekInputSupplierProd($data, $idSupplier){
+        if (!empty($idSupplier)) {
+           return $data->id_supplier = $idSupplier;
+        }
+        return $data->id_supplier = $data->id_supplier; 
+    }
+ }
+ if (!function_exists('cekInputStockProd')){
+    function cekInputStockProd($data, $stock){
+        if (!empty($stock)) {
+            return $data->stock = $stock;
+        }
+        return $data->stock = $data->stock;
+    }
+ }
+ if (!function_exists('cekInputHargaJual')){
+    function cekInputHargaJual($data, $sell){
+        if (!empty($sell)) {
+           return $data->harga_jual = $sell;
+        }
+        return $data->harga_jual =  $data->harga_jual;
+    }
+ }
+ if (!function_exists('cekInputHargaBeli')){
+    function cekInputHargaBeli($data, $buy){
+        if (!empty($buy)) {
+            return $data->harga_beli = $buy;
+        }
+        return $data->harga_beli = $data->harga_beli;
     }
  }

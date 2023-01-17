@@ -47,7 +47,8 @@ class ProductController extends Controller
     }
 
     public function updateProduct_con(Request $request){
-
+        $id = $request->id_product;
+        return $this->service_product->updateProductService($id, $request);
     }
 
     public function deleteProduct_con(Request $request){

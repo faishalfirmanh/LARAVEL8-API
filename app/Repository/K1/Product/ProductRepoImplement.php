@@ -70,7 +70,27 @@ class ProductRepoImplement implements ProductRepo{
 
     public function updateProduct($id, $data)
     {
-        
+        $prod = $this->model->where('id',$id)->first();
+        $prod->name_product = cekInputNameProd($prod, $data->name_product);
+        if (!empty( $data->name_product))
+            $prod->kode_product = $data->code_product;
+        $prod->expired_date = cekExpiredProd($prod, $data->expired_date);
+        $prod->save();
+
+        $relation_cateogry = $this->model_product_category->where('id_product',$id)->first();
+        $relation_cateogry->id_category = cekInputCategoryProd($relation_cateogry,$data->id_category);
+        $relation_cateogry->save();
+
+        $relation_supp = $this->model_product_supplier->where('id_product',$id)->first();
+        $relation_supp->id_supplier = cekInputSupplierProd($relation_supp, $data->id_supplier);
+        $relation_supp->save();
+
+        $relation_stock = $this->model_product_stock->where('id_product',$id)->first();
+        $relation_stock->stock = cekInputStockProd($relation_stock, $data->stock);
+        $relation_stock->harga_beli = cekInputHargaBeli($relation_stock, $data->harga_beli);
+        $relation_stock->harga_jual = cekInputHargaJual($relation_stock, $data->harga_jual);
+        $relation_stock->save();
+        return true;
     }
 
     public function deleteProduct($id)
