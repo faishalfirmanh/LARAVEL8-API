@@ -56,7 +56,6 @@ Route::post('delete_category',[CategoryController::class,'deleteCategory_Con']);
 /**------ category end------- */
 
 /**---- supplier----- */
-
 Route::get('get_supplier',[SupplierController::class,'get_allSupplier_con']);
 Route::get('get_supplierById',[SupplierController::class,'get_SupplierById_con']);
 Route::get('ajax_getPhoneSupplier',[SupplierController::class,'ajaxGetPhoneSupplier']);
@@ -69,7 +68,7 @@ Route::post('delete_supplier',[SupplierController::class,'delete_Supplier_con'])
 /**---- Product Start----- */
 Route::get('get_allProduct',[ProductController::class, 'getAllProduct_con']);
 Route::get('get_ProductByid',[ProductController::class, 'getProductById_con']);
-Route::post('post_Product',[ProductController::class, 'postProduct_con']);
+Route::post('post_Product',[ProductController::class, 'postProduct_con']);//->ok
 Route::post('update_Product',[ProductController::class, 'updateProduct_con']);
 Route::post('delete_Product',[ProductController::class, 'deleteProduct_con']);
 /**---- Product End----- */

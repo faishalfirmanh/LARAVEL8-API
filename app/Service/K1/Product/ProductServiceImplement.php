@@ -2,6 +2,7 @@
 namespace App\Service\K1\Product;
 use App\Repository\K1\Product\ProductRepo;
 use App\Rules\K1\Rules_cek_category_product_id;
+use App\Rules\K1\Rules_cek_same_name_product;
 use App\Rules\K1\Rules_cek_supplier_id;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,7 +28,7 @@ class ProductServiceImplement implements ProductService{
     public function postProductService($data)
     {
         $validator = Validator::make($data->all(),[
-            'name_product'=> 'required|string',
+            'name_product'=> ['required','string', new Rules_cek_same_name_product],
             'expired_date'=> 'date',
             'id_supplier'=> ['required', 'numeric', new Rules_cek_supplier_id],
             'id_category'=> ['required', 'numeric', new Rules_cek_category_product_id],
@@ -44,6 +45,7 @@ class ProductServiceImplement implements ProductService{
                     'msg'=> ' purchase price more than selling price'
                 ],400);
              }
+             $data->code_product = getLastIdProd().explode(" ",$data->name_product)[0].str_replace('-','',date('Y-m-d')).$data->id_supplier;
              $save = $this->repository_product->postProduct($data);
              return response()->json([
                 'status'=> 'ok',

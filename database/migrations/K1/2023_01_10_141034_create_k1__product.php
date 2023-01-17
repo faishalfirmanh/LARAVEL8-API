@@ -15,6 +15,7 @@ class CreateK1Product extends Migration
     {
         Schema::create('k1_product', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_product')->nullable();
             $table->string('name_product');
             $table->date('expired_date');
             $table->timestamps();

@@ -89,11 +89,19 @@ class CategoryServiceImplement implements CategoryService{
         }else{
             $result_find = $this->categoryRepositry->getCategoryById($data->id_category);
             if ($result_find != NULL) {
-                $this->categoryRepositry->deleteCategory($data->id_category);
-                return response()->json([
-                    'status'=>'deleted success',
-                    'id' => $data->id_category
-                ],200);
+                if (cekCategoryRelationProdByIdCategory($data->id_category) != null) {
+                    return response()->json([
+                        'status'=>'category is have realtions',
+                        'data' => 'deleted failed',
+                        'id'=>$data->id_category
+                    ],404);
+                }else{
+                    $this->categoryRepositry->deleteCategory($data->id_category);
+                    return response()->json([
+                        'status'=>'deleted success',
+                        'id' => $data->id_category
+                    ],200);
+                }
             }else{
                 return response()->json([
                     'status'=>'category not found',

@@ -32,5 +32,11 @@ class K1_Supplier_seeder extends Seeder
         $sup_3->phone_number = '08234121342';
         $sup_3->name_pt = 'PT. Petrokimia Gersik';
         $sup_3->save();
+
+        $sup_4 = new K1_Supplier();
+        $sup_4->name = 'pras kebun bibit testing_1';
+        $sup_4->phone_number = '0823121342';
+        $sup_4->name_pt = 'PT. Bibit bumi perkasa';
+        $sup_4->save();
     }
 }

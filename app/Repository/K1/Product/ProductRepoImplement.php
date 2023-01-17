@@ -45,6 +45,7 @@ class ProductRepoImplement implements ProductRepo{
         $prod = $this->model;
         $prod->name_product = $data->name_product;
         $prod->expired_date = $data->expired_date;
+        $prod->kode_product = $data->code_product;
         $prod->save();
 
         $prodId = $prod->id;

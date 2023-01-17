@@ -179,11 +179,19 @@ class SupplierServiceImplement implements SupplierService{
         }else{
             $find = $this->repository_supplier->getSupplierById($id->id_supplier);
             if ($find != NULL) {
-                $deleted = $this->repository_supplier->deleteSupplier($id->id_supplier);
-                return response()->json([
-                    'status'=>'deleted_success',
-                    'id'=>$id->id_supplier
-                ],200);
+                if (cekSupplierRelationProdByIdSupplier($id->id_supplier) != NULL) {
+                    return response()->json([
+                        'status'=>'supplier is have realtions',
+                        'data' => 'deleted failed',
+                        'id'=>$id->id_supplier
+                    ],404);
+                }else{
+                    $deleted = $this->repository_supplier->deleteSupplier($id->id_supplier);
+                    return response()->json([
+                        'status'=>'deleted_success',
+                        'id'=>$id->id_supplier
+                    ],200);
+                }
             }else{
                 return response()->json([
                     'status'=>'deleted_failed',
