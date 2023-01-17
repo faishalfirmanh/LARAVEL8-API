@@ -38,6 +38,6 @@ class Rules_cek_productId implements Rule
      */
     public function message()
     {
-        return 'Gagal, product_id tidak ditemukan';
+        return 'Gagal, id_product tidak ditemukan';
     }
 }

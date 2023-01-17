@@ -52,6 +52,6 @@ class ProductController extends Controller
     }
 
     public function deleteProduct_con(Request $request){
-
+        return $this->service_product->deleteProductService($request);
     }
 }

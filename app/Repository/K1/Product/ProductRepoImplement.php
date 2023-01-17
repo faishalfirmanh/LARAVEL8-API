@@ -95,6 +95,14 @@ class ProductRepoImplement implements ProductRepo{
 
     public function deleteProduct($id)
     {
-        
+        $prod = $this->model->find($id);
+        $prod->delete();
+        $category = $this->model_product_category->where('id_product',$id)->first();
+        $category->delete();
+        $supp = $this->model_product_supplier->where('id_product',$id)->first();
+        $supp->delete();
+        $stock = $this->model_product_stock->where('id_product',$id)->first();
+        $stock->delete();
+        return true;
     }
 }

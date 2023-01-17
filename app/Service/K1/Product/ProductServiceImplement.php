@@ -114,7 +114,25 @@ class ProductServiceImplement implements ProductService{
 
     public function deleteProductService($id)
     {
-        
+        $validator = Validator::make($id->all(),[
+            'id_product' => ['required','numeric', new Rules_cek_productId]
+        ]);
+        if ($validator->fails()) {
+            return $validator->errors();
+        }else{
+            $deleted = $this->repository_product->deleteProduct($id->id_product);
+            if ($deleted) {
+                return response()->json([
+                    'status'=>'deleted_success',
+                    'data'=>'deleted'
+                ],200);
+            }else{
+                return response()->json([
+                    'status'=>'deleted_failed',
+                    'data'=>'query delete product failed'
+                ],500);
+            }
+        }
     }
 
 }
