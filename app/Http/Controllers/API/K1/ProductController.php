@@ -22,24 +22,7 @@ class ProductController extends Controller
     }
     
     public function getProductById_con(Request $request){
-        $id = $request->product_id;
-        $cek = searchAllSupplierInRelation($id);
-        if ($cek != NULL) {
-            $product = K1_Product::query()->where('id',$id)->select('id','name_product','expired_date')->first();
-            return response()->json([
-                'product'=>$product,
-                'data_supplier'=>$product->supplierProduct[0][0],
-            ]);
-        }else{
-            return response()->json([
-              'msg'=>'data no found'
-            ],404);
-        }
-       
-        //var_dump();
-       // unset($product->supplierProduct[0]);
-     
-        
+        return $this->service_product->getProducByIdService($request);
     }
 
     public function postProduct_con(Request $request){

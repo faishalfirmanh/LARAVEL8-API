@@ -37,7 +37,7 @@ class ProductRepoImplement implements ProductRepo{
     }
     public function getProductById($id)
     {
-        return K1_Product::query()->where('id',$id)->first();
+        return K1_Product::query()->where('id',$id)->select('id','name_product','expired_date')->first();
     }
 
     public function postProduct($data)
