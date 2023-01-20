@@ -9,7 +9,7 @@ use App\Models\P1\Product;
 use Illuminate\Http\Request;
 use App\Service\K1\Product\ProductService;
 
-class ProductController extends Controller
+class ProductControllerK1 extends Controller
 {
     //
     private $service_product;

@@ -9,7 +9,7 @@ use App\Service\K1\Category\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
-class CategoryController extends Controller
+class CategoryControllerK1 extends Controller
 {
     //
     private $categoryService;

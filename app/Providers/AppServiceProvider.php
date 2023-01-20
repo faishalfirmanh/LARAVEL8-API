@@ -12,6 +12,8 @@ use App\Repository\K1\ProductSuppRelations\ProductSupRepo;
 use App\Repository\K1\ProductSuppRelations\ProductSupRepoImplement;
 use App\Repository\K1\Supplier\SupplierRepoImplement;
 use App\Repository\K1\Supplier\SupplierRepo;
+use App\Repository\K1\User\UserRepository;
+use App\Repository\K1\User\UserRepositoryImplement;
 use App\Service\K1\Category\CategoryService;
 use App\Service\K1\Category\CategoryServiceImplement;
 use App\Service\K1\Product\ProductService;
@@ -20,6 +22,8 @@ use App\Service\K1\ProductStock\ProductStockService;
 use App\Service\K1\ProductStock\ProductStockServiceImplement;
 use App\Service\K1\Supplier\SupplierService;
 use App\Service\K1\Supplier\SupplierServiceImplement;
+use App\Service\K1\User\UserService;
+use App\Service\K1\User\UserServiceImplement;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //fungsi bind untuk mengikat  class terkait, agar bisa dikenali oleh laravel dan bisa diakses
+        //user
+        $this->app->bind(UserRepository::class, UserRepositoryImplement::class);
+        $this->app->bind(UserService::class, UserServiceImplement::class);
         //category
         $this->app->bind(CategoryRepository::class, CategoryRepositoryImplement::class); //1
         $this->app->bind(CategoryService::class, CategoryServiceImplement::class);//2

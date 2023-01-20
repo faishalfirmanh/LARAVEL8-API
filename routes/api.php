@@ -1,11 +1,14 @@
 <?php
 
-use App\Http\Controllers\API\K1\CategoryController;
-use App\Http\Controllers\API\K1\SupplierController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\P1\UserController;
-use App\Http\Controllers\API\K1\ProductController;
+use App\Http\Controllers\API\P1\ProductController;
+use App\Http\Controllers\API\K1\ProductControllerK1;
+use App\Http\Controllers\API\K1\CategoryControllerK1;
+use App\Http\Controllers\API\K1\SupplierControllerK1;
+use App\Http\Controllers\API\K1\UserControllerK1;
 use App\Models\User;
 
 /*
@@ -44,33 +47,44 @@ Route::get('search_product', [ProductController::class, 'searchProduct']); //par
 
 /**------ category start------- */
 /** --- testing repo patern--- */
-Route::get('get_category',[CategoryController::class,'index'])->name('get_category');
-Route::get('get_category_ParamId/{id}',[CategoryController::class,'getCategoryIdCon'])->name('get_category_byId');
-Route::get('get_category_ParamName/{name}',[CategoryController::class,'getCategoryByNameCon'])->name('get_category_byName');
+Route::get('get_category',[CategoryControllerK1::class,'index'])->name('get_category');
+Route::get('get_category_ParamId/{id}',[CategoryControllerK1::class,'getCategoryIdCon'])->name('get_category_byId');
+Route::get('get_category_ParamName/{name}',[CategoryControllerK1::class,'getCategoryByNameCon'])->name('get_category_byName');
 //for api----
-Route::get('get_category_id',[CategoryController::class,'getCategory_IdCon'])->name('get_category_id');//->done
-Route::get('get_category_name',[CategoryController::class,'getCategory_NameCon'])->name('get_category_name');
-Route::post('post_category',[CategoryController::class,'postCategory_Con']);//->done
-Route::post('update_category',[CategoryController::class,'updateCategory_Con']);//->done
-Route::post('delete_category',[CategoryController::class,'deleteCategory_Con']);//->done
+
+/**------- User ----------- */
+Route::post('register_userK1',[UserControllerK1::class,'RegisterUserCon']);//ok
+Route::post('login_userK1',[UserControllerK1::class, 'LoginUserCon']);//ok
+Route::get('get_userByIdk1',[UserControllerK1::class,'getUserByIdCon']);
+/**------- User End ----------- */
+
+
+Route::get('get_category_id',[CategoryControllerK1::class,'getCategory_IdCon'])->name('get_category_id');//->done
+Route::get('get_category_name',[CategoryControllerK1::class,'getCategory_NameCon'])->name('get_category_name');
+Route::post('post_category',[CategoryControllerK1::class,'postCategory_Con']);//->done
+Route::post('update_category',[CategoryControllerK1::class,'updateCategory_Con']);//->done
+Route::post('delete_category',[CategoryControllerK1::class,'deleteCategory_Con']);//->done
 /**------ category end------- */
 
 /**---- supplier----- */
-Route::get('get_supplier',[SupplierController::class,'get_allSupplier_con']);
-Route::get('get_supplierById',[SupplierController::class,'get_SupplierById_con']);
-Route::get('ajax_getPhoneSupplier',[SupplierController::class,'ajaxGetPhoneSupplier']);
-Route::post('post_supplier',[SupplierController::class,'post_Supplier_con']);
-Route::post('update_supplier',[SupplierController::class,'update_Supplier_con']);
-Route::post('delete_supplier',[SupplierController::class,'delete_Supplier_con']);
+Route::middleware('auth:sanctum')->group(function () { //use auth:sanctum wrap in hire
+    Route::get('get_supplier',[SupplierControllerK1::class,'get_allSupplier_con']);
+});
+
+Route::get('get_supplierById',[SupplierControllerK1::class,'get_SupplierById_con']);
+Route::get('ajax_getPhoneSupplier',[SupplierControllerK1::class,'ajaxGetPhoneSupplier']);
+Route::post('post_supplier',[SupplierControllerK1::class,'post_Supplier_con']);
+Route::post('update_supplier',[SupplierControllerK1::class,'update_Supplier_con']);
+Route::post('delete_supplier',[SupplierControllerK1::class,'delete_Supplier_con']);
 
 /**---- supplier----- */
 
 /**---- Product Start----- */
-Route::get('get_allProduct',[ProductController::class, 'getAllProduct_con']);
-Route::get('get_ProductByid',[ProductController::class, 'getProductById_con']);
-Route::post('post_Product',[ProductController::class, 'postProduct_con']);//->ok
-Route::post('update_Product',[ProductController::class, 'updateProduct_con']);
-Route::post('delete_Product',[ProductController::class, 'deleteProduct_con']);
+Route::get('get_allProduct',[ProductControllerK1::class, 'getAllProduct_con']);
+Route::get('get_ProductByid',[ProductControllerK1::class, 'getProductById_con']);
+Route::post('post_Product',[ProductControllerK1::class, 'postProduct_con']);//->ok
+Route::post('update_Product',[ProductControllerK1::class, 'updateProduct_con']);
+Route::post('delete_Product',[ProductControllerK1::class, 'deleteProduct_con']);
 /**---- Product End----- */
 
 /** api K1 END */

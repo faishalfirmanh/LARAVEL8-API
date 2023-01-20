@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Service\K1\Supplier\SupplierService;
 use Illuminate\Http\Request;
 
-class SupplierController extends Controller
+class SupplierControllerK1 extends Controller
 {
     //
     private $service_supplier;

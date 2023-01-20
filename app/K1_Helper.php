@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\k1\K1_User;
 use App\Models\k1\K1_Category;
 use App\Models\k1\K1_Product;
 use App\Models\k1\K1_Product_category;
 use App\Models\k1\K1_Product_supplier;
+use App\Models\K1\K1_Role_user;
 use App\Models\k1\K1_Supplier;
 use PhpParser\Node\Stmt\Else_;
 
@@ -20,6 +22,26 @@ if (!function_exists('cekCategoryId')) {
         }
    }
 }
+if (!function_exists('cekEmailUser')) {
+   function cekEmailUser($email){
+     $data = K1_User::query()->where('email',$email)->first();
+     if ($data != NULL) {
+        return $data;
+     }else{
+        return null;
+     }
+   }
+}
+if (!function_exists('cekRuleIdForUser')) {
+    function cekRuleIdForUser($id){
+      $data = K1_Role_user::find($id);
+      if ($data != NULL) {
+         return $data;
+      }else{
+         return null;
+      }
+    }
+ }
 if (!function_exists('cekCategoryName')) {
     function cekCategoryName($name){
         $data = K1_Category::query()->where('name_category',$name)->first();
