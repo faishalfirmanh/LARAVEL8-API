@@ -10,7 +10,7 @@ use App\Models\k1\K1_Product_category;
 use App\Models\k1\K1_Product_supplier;
 use App\Models\K1\K1_Role_user;
 use App\Models\k1\K1_Supplier;
-use PhpParser\Node\Stmt\Else_;
+
 
 if (!function_exists('cekCategoryId')) {
    function cekCategoryId($id){
@@ -130,6 +130,14 @@ if (!function_exists('searchAllSupplierInRelation')) { //ARRAY
         }else{
             return null;
         }
+    }
+ }
+
+
+ if (!function_exists('getLastIdUser_k1')) {
+    function getLastIdUser_k1(){
+        $data =  K1_User::max('id');
+        return intval($data)+1;
     }
  }
 

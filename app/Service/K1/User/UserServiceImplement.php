@@ -48,7 +48,9 @@ class UserServiceImplement implements UserService{
                 return response()->json([
                     'message' => 'Login success',
                     'token'=> $token,
-                    'token_type' => 'Bearer'
+                    'token_type' => 'Bearer',
+                    'email_user'=>$data->email,
+                    'role_user'=> $cek_email->getRoleUser
                 ],200);
             }else{
                 return response()->json([

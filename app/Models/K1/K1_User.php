@@ -2,6 +2,7 @@
 
 namespace App\Models\K1;
 
+use App\Models\k1\K1_Role_user;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -22,4 +23,9 @@ class K1_User extends Model
         'email',
         'password',
     ];
+
+    public function getRoleUser()
+    {
+        return $this->hasMany(K1_Role_user::class,'id','id_role')->select('id','name');
+    }
 }
