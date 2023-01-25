@@ -33,7 +33,10 @@ class ProductStockRepoImplement implements ProductStockRepo{
 
     public function updateProductStockRepo($idProduct, $data)
     {
-        
+        $find = $this->model->query()->where('id_product',$idProduct)->first();
+        $find->stock = $data;
+        $find->save();
+        return $find->fresh();
     }
 
     public function deleteProductStockRepo($idProduct)

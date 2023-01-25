@@ -8,6 +8,7 @@ use App\Http\Controllers\API\P1\ProductController;
 use App\Http\Controllers\API\K1\ProductControllerK1;
 use App\Http\Controllers\API\K1\CategoryControllerK1;
 use App\Http\Controllers\API\K1\SupplierControllerK1;
+use App\Http\Controllers\API\K1\TransactionControllerK1;
 use App\Http\Controllers\API\K1\UserControllerK1;
 use App\Models\User;
 
@@ -86,5 +87,10 @@ Route::post('post_Product',[ProductControllerK1::class, 'postProduct_con']);//->
 Route::post('update_Product',[ProductControllerK1::class, 'updateProduct_con']);
 Route::post('delete_Product',[ProductControllerK1::class, 'deleteProduct_con']);
 /**---- Product End----- */
+
+/**---- Transaction start------ */
+Route::post('generate_new_trans',[TransactionControllerK1::class, 'GenerateNewTransaction_con']);
+Route::post('post_transaction',[TransactionControllerK1::class, 'PostTransaction_con']);
+/**---- Transaction end------ */
 
 /** api K1 END */

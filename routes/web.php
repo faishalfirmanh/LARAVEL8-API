@@ -13,7 +13,7 @@ use App\Http\Controllers\WEB\P1\HomeController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/',[HomeController::class,'index']);
+Route::get('/', function () {
+    return view('welcome');
+});
+//Route::get('/',[HomeController::class,'index']);

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Models\k1;
+namespace App\Models\K1;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class K1_Voucher extends Model
+class K1_Voucher_for_transaction extends Model
 {
     use HasFactory;
-    protected $table = 'k1_voucher';
 }

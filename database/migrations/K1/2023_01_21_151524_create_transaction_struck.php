@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateK1Transaction extends Migration
+class CreateTransactionStruck extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateK1Transaction extends Migration
      */
     public function up()
     {
-        Schema::create('k1_transaction', function (Blueprint $table) {
+        Schema::create('k1_transaction_struck', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_transaction_details');
-            $table->integer('total_harga');
-            $table->integer('total_bayar');
+            $table->integer('total_harga');//total semua harga
+            $table->string('kode_transaction');
+            $table->integer('total_bayar');// yang dibayar
             $table->integer('kembalian');
-            $table->integer('hemat')->nullable();
-            $table->string('is_used_voucher')->nullable();
-            $table->string('is_voucher')->nullable();
+            $table->string('is_voucher_code')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateK1Transaction extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('k1_transaction');
+        Schema::dropIfExists('k1_transaction_struck');
     }
 }

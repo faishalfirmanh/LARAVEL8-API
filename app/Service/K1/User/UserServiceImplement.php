@@ -50,6 +50,7 @@ class UserServiceImplement implements UserService{
                     'token'=> $token,
                     'token_type' => 'Bearer',
                     'email_user'=>$data->email,
+                    'id_user'=>$cek_email->id,
                     'role_user'=> $cek_email->getRoleUser
                 ],200);
             }else{

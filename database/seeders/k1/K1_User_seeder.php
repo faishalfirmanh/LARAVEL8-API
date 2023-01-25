@@ -16,11 +16,11 @@ class K1_User_seeder extends Seeder
     {
         //
         $user1 = new K1_User();
-        $user1->name = 'admin';
-        $user1->username = 'admin123';
-        $user1->email = 'admin123@mail.com';
-        $user1->id_role = 1;
-        $user1->password = Hash::make('admin123');
+        $user1->name = env('user_admin_name');
+        $user1->username = explode(" ",env('user_admin_name'))[0].'_'.getLastIdUser_k1();
+        $user1->email = env('user_admin_email');
+        $user1->id_role = env('user_id_role');
+        $user1->password = Hash::make(env('user_admin_password'));
         $user1->save();
     }
 }

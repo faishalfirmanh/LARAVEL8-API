@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\k1;
+namespace App\Models\K1;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class K1_Transaction_details extends Model
+class K1_Generate_New_Transaction extends Model
 {
     use HasFactory;
-    protected $table = 'k1_transaction_details';
+    protected $table = 'k1_generate_new_transaction';
 }

@@ -10,6 +10,8 @@ use App\Models\k1\K1_Product_category;
 use App\Models\k1\K1_Product_supplier;
 use App\Models\K1\K1_Role_user;
 use App\Models\k1\K1_Supplier;
+use App\Models\k1\K1_Generate_New_Transaction;
+use App\Models\k1\K1_Product_stock;
 
 
 if (!function_exists('cekCategoryId')) {
@@ -32,6 +34,18 @@ if (!function_exists('cekEmailUser')) {
      }
    }
 }
+
+if (!function_exists('cekIdUser')) {
+    function cekIdUser($id){
+      $data = K1_User::query()->where('id',$id)->first();
+      if ($data != NULL) {
+         return $data;
+      }else{
+         return null;
+      }
+    }
+ }
+
 if (!function_exists('cekRuleIdForUser')) {
     function cekRuleIdForUser($id){
       $data = K1_Role_user::find($id);
@@ -163,6 +177,17 @@ if (!function_exists('searchAllSupplierInRelation')) { //ARRAY
     }
  }
 
+ if (!function_exists('getProductStockAndPrice')) {
+    function getProductStockAndPrice($idProd){
+        $data =  K1_Product_stock::query()->where('id',$idProd)->first();
+        if ($data != NULL) {
+            return $data;
+        }else{
+            return null;
+        }
+    }
+ }
+
  if (!function_exists('getProductByName')) {
     function getProductByName($name){
         $data =  K1_Product::query()->where('name_product',$name)->first();
@@ -252,3 +277,15 @@ if (!function_exists('searchAllSupplierInRelation')) { //ARRAY
         return $data->harga_beli = $data->harga_beli;
     }
  }
+/**-- transaction */
+
+if (!function_exists('getCodeGenerateTransaction')) {
+   function getCodeGenerateTransaction($kode){
+     $data = K1_Generate_New_Transaction::query()->where('kode_transaction',$kode)->first();
+     if ($data != null) {
+        return $data;
+     }else{
+        return null;
+     }
+   }
+}
