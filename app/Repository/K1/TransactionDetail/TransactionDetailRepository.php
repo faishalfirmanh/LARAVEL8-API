@@ -4,6 +4,7 @@ namespace App\Repository\K1\TransactionDetail;
 
 interface TransactionDetailRepository{
     public function PostTransaction($data);
+    public function UpdateTransaction($data);
 
     public function GetTransactionByCodeTrans($code_trans);
     public function DeleteTransaction($id,$code_trans);

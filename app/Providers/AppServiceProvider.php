@@ -18,6 +18,8 @@ use App\Repository\K1\TransactionDetail\TransactionDetailRepository;
 use App\Repository\K1\TransactionDetail\TransactionDetailRepositoryImplement;
 use App\Repository\K1\User\UserRepository;
 use App\Repository\K1\User\UserRepositoryImplement;
+use App\Repository\K1\VoucherForTransaction\VoucherRepository;
+use App\Repository\K1\VoucherForTransaction\VoucherRepositoryImplement;
 use App\Service\K1\Category\CategoryService;
 use App\Service\K1\Category\CategoryServiceImplement;
 use App\Service\K1\Product\ProductService;
@@ -63,6 +65,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(GenerateTransRepo::class, GenerateTransRepoImpelemnt::class);
         $this->app->bind(TransactionDetailRepository::class, TransactionDetailRepositoryImplement::class);
         $this->app->bind(TransactionDetailServ::class, TransactionDetailServImplement::class);
+        /**--------- Voucher ------*/
+        $this->app->bind(VoucherRepository::class, VoucherRepositoryImplement::class);
+        //transaction end
     }
 
     /**

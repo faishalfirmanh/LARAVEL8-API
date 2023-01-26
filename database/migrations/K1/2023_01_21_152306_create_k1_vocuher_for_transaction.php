@@ -15,7 +15,7 @@ class CreateK1VocuherForTransaction extends Migration
     {
         Schema::create('k1_vocuher_for_transaction', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_transaction');
+            $table->string('kode_transaction');
             $table->string('kode_voucher');
             $table->tinyInteger('is_used')->default(0);
             $table->date('expired_voucher');

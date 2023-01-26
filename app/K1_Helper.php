@@ -12,7 +12,9 @@ use App\Models\K1\K1_Role_user;
 use App\Models\k1\K1_Supplier;
 use App\Models\k1\K1_Generate_New_Transaction;
 use App\Models\k1\K1_Product_stock;
-
+use App\Models\K1\K1_Setting_promo_transaction;
+use App\Models\K1\K1_Transaction_detail;
+use App\Models\K1\K1_Voucher_for_transaction;
 
 if (!function_exists('cekCategoryId')) {
    function cekCategoryId($id){
@@ -288,4 +290,57 @@ if (!function_exists('getCodeGenerateTransaction')) {
         return null;
      }
    }
+}
+
+if (!function_exists('cekTransactionSameProdId')) {
+    function cekTransactionSameProdId($idProd,$kode){
+      $data = K1_Transaction_detail::query()->where('id_product',$idProd)
+        ->where('kode_transaction',$kode)->first();
+      if ($data != null) {
+         return $data;
+      }else{
+         return null;
+      }
+    }
+ }
+
+if (!function_exists('cekSettingVoucer')) {
+    function cekSettingVoucer(){
+        $data = K1_Setting_promo_transaction::find(1)->first();
+        if ($data != null) {
+           return $data;
+        }else{
+           return null;
+        }
+    }
+}
+
+if(!function_exists('generateRandomStringForVoucher')){
+    function generateRandomStringForVoucher($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+}
+if (!function_exists('voucher_from_date')) {
+    function voucher_from_date(){
+        $new_code = date('Y-m-d h:i:sa');
+        $vo = str_replace(" ","L",str_replace(":","",str_replace("-","",$new_code)));
+        return $vo;
+    }
+}
+
+if (!function_exists('cekVoucherCode')) {
+    function cekVoucherCode($code){
+        $data = K1_Voucher_for_transaction::query()->where('kode_voucher',$code)->first();
+        if ($data != null) {
+            return $data;
+        }else{
+            return null;
+        }
+    }
 }

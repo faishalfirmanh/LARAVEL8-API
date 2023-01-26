@@ -19,6 +19,7 @@ class CreateTransactionStruck extends Migration
             $table->string('kode_transaction');
             $table->integer('total_bayar');// yang dibayar
             $table->integer('kembalian');
+            $table->tinyInteger('status')->default(0);
             $table->string('is_voucher_code')->nullable();
             $table->timestamps();
         });

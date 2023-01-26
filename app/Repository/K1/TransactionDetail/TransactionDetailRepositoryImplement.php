@@ -37,6 +37,15 @@ class TransactionDetailRepositoryImplement implements TransactionDetailRepositor
         return $new->fresh();
     }
 
+    public function UpdateTransaction($data)
+    {
+        $update = $this->model_transaction->where('id',$data->idTransactionDetail)->first();
+        $update->total_product = $data->total_product;
+        $update->harga_total_tiap_product = $data->harga_total_tiap_product;
+        $update->save();
+        return $update->fresh();
+    }
+
     public function DeleteTransaction($id, $code_trans)//ketika delete stock dikembalikan
     { 
         
