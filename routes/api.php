@@ -91,6 +91,8 @@ Route::post('delete_Product',[ProductControllerK1::class, 'deleteProduct_con']);
 /**---- Transaction start------ */
 Route::post('generate_new_trans',[TransactionControllerK1::class, 'GenerateNewTransaction_con']);
 Route::post('post_transaction',[TransactionControllerK1::class, 'PostTransaction_con']);
+Route::post('print_transaction',[TransactionControllerK1::class, 'PrintTransaction_con']);
+Route::get('get_transaction_struck',[TransactionControllerK1::class, 'GetTransactionStruck_con']);
 /**---- Transaction end------ */
 
 /** api K1 END */

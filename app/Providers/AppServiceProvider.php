@@ -16,6 +16,8 @@ use App\Repository\K1\Supplier\SupplierRepoImplement;
 use App\Repository\K1\Supplier\SupplierRepo;
 use App\Repository\K1\TransactionDetail\TransactionDetailRepository;
 use App\Repository\K1\TransactionDetail\TransactionDetailRepositoryImplement;
+use App\Repository\K1\TransactionStruck\TransactionStruckRepositoryImplement;
+use App\Repository\K1\TransactionStruck\TransactionStruckRepository;
 use App\Repository\K1\User\UserRepository;
 use App\Repository\K1\User\UserRepositoryImplement;
 use App\Repository\K1\VoucherForTransaction\VoucherRepository;
@@ -30,6 +32,8 @@ use App\Service\K1\Supplier\SupplierService;
 use App\Service\K1\Supplier\SupplierServiceImplement;
 use App\Service\K1\TransactionDetail\TransactionDetailServ;
 use App\Service\K1\TransactionDetail\TransactionDetailServImplement;
+use App\Service\K1\TransactionStruck\TransStruckService;
+use App\Service\K1\TransactionStruck\TransStruckServiceImplement;
 use App\Service\K1\User\UserService;
 use App\Service\K1\User\UserServiceImplement;
 use Illuminate\Support\ServiceProvider;
@@ -65,6 +69,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(GenerateTransRepo::class, GenerateTransRepoImpelemnt::class);
         $this->app->bind(TransactionDetailRepository::class, TransactionDetailRepositoryImplement::class);
         $this->app->bind(TransactionDetailServ::class, TransactionDetailServImplement::class);
+        $this->app->bind(TransactionStruckRepository::class, TransactionStruckRepositoryImplement::class);
+        $this->app->bind(TransStruckService::class, TransStruckServiceImplement::class);
         /**--------- Voucher ------*/
         $this->app->bind(VoucherRepository::class, VoucherRepositoryImplement::class);
         //transaction end
