@@ -6,5 +6,6 @@ interface TransStruckService{
 
     public function PostTransactionStruckService($data);
     public function UpdateTransactionStruckService($data);
-    public function GetTransactionStrucByCodeTrans($code_trans);
+    public function GetTransactionStrucByCodeTrans($code_trans); //all data
+    public function GetProductTransStruckByCode($code_trans); // just data product
 }

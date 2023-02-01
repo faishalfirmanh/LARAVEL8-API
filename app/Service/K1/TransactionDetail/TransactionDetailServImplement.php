@@ -70,26 +70,7 @@ class TransactionDetailServImplement implements TransactionDetailServ{
                 $this->repo_generate_new_trans->UpdateGenerateTransaction($request->kode_transaction,1);
              }
              $amoun_must_pay = $this->repository->AmountMusPayTransaction($request->kode_transaction);
-            //validation promo start
-             $setting_promo = cekSettingVoucer();
-             $var_voucher = []; //voucher[0]
-             if ($setting_promo->is_active == '1' && $amoun_must_pay > $setting_promo->price_min) {
-                    $str_random = generateRandomStringForVoucher(10);
-                    $vocher_date = voucher_from_date();
-                    $expired_date = date("Y-m-d", strtotime(date("Y-m-d h:i:sa") . ' +'.$setting_promo->expired_voucher.' day'));
-                    if (cekVoucherCode($str_random) == null) {
-                        $voucher = $str_random;
-                    }else{
-                        $voucher = 'V'.$vocher_date;
-                    }
-                    $request_for_voucher = $request;
-                    $request_for_voucher->code_voucher = $voucher;
-                    $request_for_voucher->expired = $expired_date;
-                    //insert voucher
-                    $success_create_voucher = $this->repo_voucher->CreateNewVoucherTransaction($request_for_voucher);
-                    array_push($var_voucher,$success_create_voucher->kode_voucher);
-             }
-             //validation promo end
+           
             $data_transaction_details = $this->repository->GetTransactionByCodeTrans($request->kode_transaction);
             $temporary_struck = array();
             foreach ($data_transaction_details as $key) {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\K1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\K1_TransRequest;
 use App\Http\Requests\K1_GetTransStruckRequest;
+use App\Http\Requests\K1_TransactionBeforePrintRequest;
+use App\Http\Requests\K1_TransactionStruckUpdateRequest;
 use Illuminate\Http\Request;
 use App\Service\K1\TransactionDetail\TransactionDetailServ;
 use App\Service\K1\TransactionStruck\TransStruckService;
@@ -46,10 +48,16 @@ class TransactionControllerK1 extends Controller
         }
     }
 
-    public function PrintTransaction_con(Request $request)
+    public function PrintTransaction_con(K1_TransactionBeforePrintRequest $request)
     {
         $post = $this->service_trans_struck->PostTransactionStruckService($request);
         return $post;
+    }
+
+    public function UpdateTransaction_con(K1_TransactionStruckUpdateRequest $request)
+    {
+        $update = $this->service_trans_struck->UpdateTransactionStruckService($request);
+        return $update;
     }
 
     public function GetTransactionStruck_con(K1_GetTransStruckRequest $request)

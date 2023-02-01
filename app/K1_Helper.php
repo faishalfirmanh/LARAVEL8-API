@@ -14,6 +14,7 @@ use App\Models\k1\K1_Generate_New_Transaction;
 use App\Models\k1\K1_Product_stock;
 use App\Models\K1\K1_Setting_promo_transaction;
 use App\Models\K1\K1_Transaction_detail;
+use App\Models\K1\K1_Transacion_struck;
 use App\Models\K1\K1_Voucher_for_transaction;
 
 if (!function_exists('cekCategoryId')) {
@@ -304,6 +305,29 @@ if (!function_exists('cekTransactionSameProdId')) {
     }
  }
 
+ if (!function_exists('cekTransactionCodeInDetails')) {
+    function cekTransactionCodeInDetails($kode){
+      $data = K1_Transaction_detail::query()
+        ->where('kode_transaction',$kode)->first();
+      if ($data != null) {
+         return $data;
+      }else{
+         return null;
+      }
+    }
+ }
+
+ if (!function_exists('cekTransactionCodeInStruck')) {
+    function cekTransactionCodeInStruck($kode){
+      $data = K1_Transacion_struck::query()
+        ->where('kode_transaction_inStruck',$kode)->first();
+      if ($data != null) {
+         return $data;
+      }else{
+         return null;
+      }
+    }
+ }
 if (!function_exists('cekSettingVoucer')) {
     function cekSettingVoucer(){
         $data = K1_Setting_promo_transaction::find(1)->first();
@@ -337,6 +361,17 @@ if (!function_exists('voucher_from_date')) {
 if (!function_exists('cekVoucherCode')) {
     function cekVoucherCode($code){
         $data = K1_Voucher_for_transaction::query()->where('kode_voucher',$code)->first();
+        if ($data != null) {
+            return $data;
+        }else{
+            return null;
+        }
+    }
+}
+
+if (!function_exists('cekCodeTransInVocuher')) {
+    function cekCodeTransInVocuher($codeTrans){
+        $data = K1_Voucher_for_transaction::query()->where('code_transaction',$codeTrans)->first();
         if ($data != null) {
             return $data;
         }else{

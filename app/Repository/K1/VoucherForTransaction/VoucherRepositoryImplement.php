@@ -23,6 +23,9 @@ class VoucherRepositoryImplement implements VoucherRepository{
 
     public function UpdateVoucherTransaction($kode, $data)
     {
-        
+        $update = $this->model->where('kode_voucher',$kode)->first();
+        $update->is_used = $data->is_used;
+        $update->save();
+        return $update->fresh();
     }
 }
