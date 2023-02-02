@@ -25,7 +25,7 @@ class ProductSupRepoImplement implements ProductSupRepo{
     public function postProductSuppRelations($data)
     {
         $new_category_product = $this->model_product_supplier;
-        $new_category_product->id_product = $data->id_product;
+        $new_category_product->id_product = $data->idProd;
         $new_category_product->id_supplier = $data->id_supplier;
         return $new_category_product->save();
     }

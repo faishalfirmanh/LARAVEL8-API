@@ -1,6 +1,9 @@
 <?php
 namespace App\Service\K1\Product;
 use App\Repository\K1\Product\ProductRepo;
+use App\Repository\K1\ProductCategory\ProductCategoryRepo;
+use App\Repository\K1\ProductStock\ProductStockRepo;
+use App\Repository\K1\ProductSuppRelations\ProductSupRepo;
 use App\Rules\K1\Rules_cek_category_product_id;
 use App\Rules\K1\Rules_cek_productId;
 use App\Rules\K1\Rules_cek_same_name_product;
@@ -10,10 +13,19 @@ use Illuminate\Support\Facades\Validator;
 class ProductServiceImplement implements ProductService{
 
     protected $repository_product;
-    
-    public function __construct(ProductRepo $repository_product)
-    {
+    protected $repository_product_stock;
+    protected $repository_prod_supplier;
+    protected $repository_prod_category;
+    public function __construct(
+        ProductRepo $repository_product,
+        ProductStockRepo $repository_product_stock,
+        ProductSupRepo $repository_prod_supplier,
+        ProductCategoryRepo $repository_prod_category){
+
         $this->repository_product = $repository_product;
+        $this->repository_product_stock = $repository_product_stock;
+        $this->repository_prod_supplier = $repository_prod_supplier;
+        $this->repository_prod_category = $repository_prod_category;
     }
 
     public function getAllProductService()
@@ -63,10 +75,31 @@ class ProductServiceImplement implements ProductService{
                 ],400);
              }
              $data->code_product = getLastIdProd().explode(" ",$data->name_product)[0].str_replace('-','',date('Y-m-d')).$data->id_supplier;
-             $save = $this->repository_product->postProduct($data);
+            /**-- validasi set minimum price sell */
+            $net_profit_by_setting = (cekSettingVoucer()->percent_set_minimum_sell / 100) * $data->harga_beli;
+            $profit_minimum = intval($net_profit_by_setting + $data->harga_beli);
+            if (cekSettingVoucer()->percent_set_minimum_sell != NULL || cekSettingVoucer()->percent_set_minimum_sell > 0) {
+                if ($data->harga_jual < $profit_minimum) {
+                    return response()->json([
+                        'status'=> 'failed add new product',
+                        'msg'=> 'harga jual bermasalah',
+                        'harga_yang_diset'=> number_format($data->harga_jual),
+                        'harga_jual_minimum'=>number_format($profit_minimum)
+                    ],400);
+                }
+            }
+            /**-- validasi set minimum price sell */
+            /**--save to db */
+            $idProd_save = $this->repository_product->postProduct($data);
+            $data->idProd = $idProd_save;
+            $save_prod_stock = $this->repository_product_stock->postProductStockRepo($data);
+            $save_prod_supplier = $this->repository_prod_supplier->postProductSuppRelations($data);
+            $save_prod_category = $this->repository_prod_category->PostProductCategory($data);
+            /**--save to db */
+            /**--response status kurang menampilkan data yang baru ditambahkan*/
              return response()->json([
                 'status'=> 'ok',
-                'data'=> $save
+                'idProd'=>$idProd_save
              ],200);
         }
     }

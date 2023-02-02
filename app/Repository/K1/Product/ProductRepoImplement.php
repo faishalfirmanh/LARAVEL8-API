@@ -47,25 +47,25 @@ class ProductRepoImplement implements ProductRepo{
         $prod->expired_date = $data->expired_date;
         $prod->kode_product = $data->code_product;
         $prod->save();
+        return $prod->id;
+        /**------awal di jadikan 1 */
+        // $prod_stock = $this->model_product_stock;
+        // $prod_stock->id_product = $prodId;
+        // $prod_stock->stock = $data->stock;
+        // $prod_stock->harga_jual = $data->harga_jual;
+        // $prod_stock->harga_beli = $data->harga_beli;
+        // $save_product_stock = $prod_stock->save();
 
-        $prodId = $prod->id;
-        $prod_stock = $this->model_product_stock;
-        $prod_stock->id_product = $prodId;
-        $prod_stock->stock = $data->stock;
-        $prod_stock->harga_jual = $data->harga_jual;
-        $prod_stock->harga_beli = $data->harga_beli;
-        $save_product_stock = $prod_stock->save();
+        // $supplier = $this->model_product_supplier;
+        // $supplier->id_product = $prodId;
+        // $supplier->id_supplier = $data->id_supplier;
+        // $supplier->save();
 
-        $supplier = $this->model_product_supplier;
-        $supplier->id_product = $prodId;
-        $supplier->id_supplier = $data->id_supplier;
-        $supplier->save();
-
-        $product_category = $this->model_product_category;
-        $product_category->id_product = $prodId;
-        $product_category->id_category = $data->id_category;
-        $product_category->save();
-        return $prod->fresh();
+        // $product_category = $this->model_product_category;
+        // $product_category->id_product = $prodId;
+        // $product_category->id_category = $data->id_category;
+        // $product_category->save();
+       
     }
 
     public function updateProduct($id, $data)

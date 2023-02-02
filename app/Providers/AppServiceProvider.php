@@ -8,6 +8,8 @@ use App\Repository\K1\GenerateNewTransaction\GenerateTransRepo;
 use App\Repository\K1\GenerateNewTransaction\GenerateTransRepoImpelemnt;
 use App\Repository\K1\Product\ProductRepo;
 use App\Repository\K1\Product\ProductRepoImplement;
+use App\Repository\K1\ProductCategory\ProductCategoryRepo;
+use App\Repository\K1\ProductCategory\ProductCategoryRepoImplement;
 use App\Repository\K1\ProductStock\ProductStockRepo;
 use App\Repository\K1\ProductStock\ProductStockRepoImplement;
 use App\Repository\K1\ProductSuppRelations\ProductSupRepo;
@@ -68,6 +70,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProductStockService::class, ProductStockServiceImplement::class);
         $this->app->bind(ProductRepo::class, ProductRepoImplement::class);
         $this->app->bind(ProductSupRepo::class, ProductSupRepoImplement::class);
+        $this->app->bind(ProductCategoryRepo::class, ProductCategoryRepoImplement::class);
         //transaction
         /**generate new trnas 1  */
         $this->app->bind(GenerateTransRepo::class, GenerateTransRepoImpelemnt::class);
