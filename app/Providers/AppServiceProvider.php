@@ -12,6 +12,8 @@ use App\Repository\K1\ProductStock\ProductStockRepo;
 use App\Repository\K1\ProductStock\ProductStockRepoImplement;
 use App\Repository\K1\ProductSuppRelations\ProductSupRepo;
 use App\Repository\K1\ProductSuppRelations\ProductSupRepoImplement;
+use App\Repository\K1\SettingPromoProduct\SettingPromoRepository;
+use App\Repository\K1\SettingPromoProduct\SettingPromoRepositoryImplement;
 use App\Repository\K1\Supplier\SupplierRepoImplement;
 use App\Repository\K1\Supplier\SupplierRepo;
 use App\Repository\K1\TransactionDetail\TransactionDetailRepository;
@@ -28,6 +30,8 @@ use App\Service\K1\Product\ProductService;
 use App\Service\K1\Product\ProductServiceImplement;
 use App\Service\K1\ProductStock\ProductStockService;
 use App\Service\K1\ProductStock\ProductStockServiceImplement;
+use App\Service\K1\SettingPromoService\SettingService;
+use App\Service\K1\SettingPromoService\SettingServiceImplement;
 use App\Service\K1\Supplier\SupplierService;
 use App\Service\K1\Supplier\SupplierServiceImplement;
 use App\Service\K1\TransactionDetail\TransactionDetailServ;
@@ -74,6 +78,10 @@ class AppServiceProvider extends ServiceProvider
         /**--------- Voucher ------*/
         $this->app->bind(VoucherRepository::class, VoucherRepositoryImplement::class);
         //transaction end
+        /**--------- Setting -----*/
+        $this->app->bind(SettingService::class, SettingServiceImplement::class);
+        $this->app->bind(SettingPromoRepository::class, SettingPromoRepositoryImplement::class);
+        /**------- End Setting -----*/
     }
 
     /**

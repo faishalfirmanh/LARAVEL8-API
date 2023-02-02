@@ -10,6 +10,7 @@ use App\Http\Controllers\API\K1\CategoryControllerK1;
 use App\Http\Controllers\API\K1\SupplierControllerK1;
 use App\Http\Controllers\API\K1\TransactionControllerK1;
 use App\Http\Controllers\API\K1\UserControllerK1;
+use App\Http\Controllers\API\K1\SettingPromoControllerK1;
 use App\Models\User;
 
 /*
@@ -96,4 +97,8 @@ Route::put('print_transaction_update',[TransactionControllerK1::class, 'UpdateTr
 Route::get('get_transaction_struck',[TransactionControllerK1::class, 'GetTransactionStruck_con']);
 /**---- Transaction end------ */
 
+/**-----Setting  ----------*/
+Route::get('get_setting_byId',[SettingPromoControllerK1::class, 'GetSettingPromoCon']);
+Route::put('update_setting',[SettingPromoControllerK1::class, 'UpdateSettingPromoCon']);
+/**----- -----------*/
 /** api K1 END */

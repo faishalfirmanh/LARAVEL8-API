@@ -339,6 +339,17 @@ if (!function_exists('cekSettingVoucer')) {
     }
 }
 
+if (!function_exists('GetSettingVoucerById')) {
+    function GetSettingVoucerById($id){
+        $data = K1_Setting_promo_transaction::query()->where('id',$id)->first();
+        if ($data != null) {
+           return $data;
+        }else{
+           return null;
+        }
+    }
+}
+
 if(!function_exists('generateRandomStringForVoucher')){
     function generateRandomStringForVoucher($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
