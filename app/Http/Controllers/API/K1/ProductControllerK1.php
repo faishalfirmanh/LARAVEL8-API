@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\K1;
 
 use App\Http\Controllers\Controller;
 use App\Models\k1\K1_Product;
+use Illuminate\Support\Facades\Validator;
 use App\Models\k1\K1_Product_supplier;
 use App\Models\P1\Product;
 use Illuminate\Http\Request;
@@ -19,6 +20,22 @@ class ProductControllerK1 extends Controller
     }
     public function getAllProduct_con(){
        
+    }
+
+    /**-- for ajax when onchange value */
+    public function GetRecomentInputPriceSell_con(Request $request){
+        $percent_setting = cekSettingVoucer()->percent_set_minimum_sell;
+        $validator = Validator::make($request->all(),[
+            'harga_beli'=> 'required|numeric',
+        ]);
+        $recoment = (($percent_setting /100) * $request->harga_beli)+$request->harga_beli;
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+        return response()->json([
+            'percent'=>$percent_setting,
+            'price_sell_minimum'=>number_format($recoment)
+        ],200);
     }
     
     public function getProductById_con(Request $request){

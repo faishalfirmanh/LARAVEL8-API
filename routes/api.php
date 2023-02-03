@@ -81,6 +81,12 @@ Route::post('delete_supplier',[SupplierControllerK1::class,'delete_Supplier_con'
 
 /**---- supplier----- */
 
+/**-----Setting  ----------*/
+Route::get('get_setting_byId',[SettingPromoControllerK1::class, 'GetSettingPromoCon']);
+Route::put('update_setting',[SettingPromoControllerK1::class, 'UpdateSettingPromoCon']);
+Route::get('recommend_onchange_input_price_sell',[ProductControllerK1::class,'GetRecomentInputPriceSell_con']);//1 onclick price jual panggil api ini
+/**----- -----------*/
+
 /**---- Product Start----- */
 Route::get('get_allProduct',[ProductControllerK1::class, 'getAllProduct_con']);
 Route::get('get_ProductByid',[ProductControllerK1::class, 'getProductById_con']);
@@ -97,8 +103,5 @@ Route::put('print_transaction_update',[TransactionControllerK1::class, 'UpdateTr
 Route::get('get_transaction_struck',[TransactionControllerK1::class, 'GetTransactionStruck_con']);
 /**---- Transaction end------ */
 
-/**-----Setting  ----------*/
-Route::get('get_setting_byId',[SettingPromoControllerK1::class, 'GetSettingPromoCon']);
-Route::put('update_setting',[SettingPromoControllerK1::class, 'UpdateSettingPromoCon']);
-/**----- -----------*/
+
 /** api K1 END */
