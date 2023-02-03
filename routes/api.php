@@ -60,6 +60,11 @@ Route::post('login_userK1',[UserControllerK1::class, 'LoginUserCon']);//ok
 Route::get('get_userByIdk1',[UserControllerK1::class,'getUserByIdCon']);
 /**------- User End ----------- */
 
+/**---- auth s */
+Route::middleware('auth:sanctum')->group(function () { //use auth:sanctum wrap in hire
+    Route::post('logout_userK1',[UserControllerK1::class, 'LogoutUserCon']);
+});
+/**---- auth sanctum */
 
 Route::get('get_category_id',[CategoryControllerK1::class,'getCategory_IdCon'])->name('get_category_id');//->done
 Route::get('get_category_name',[CategoryControllerK1::class,'getCategory_NameCon'])->name('get_category_name');
@@ -69,9 +74,7 @@ Route::post('delete_category',[CategoryControllerK1::class,'deleteCategory_Con']
 /**------ category end------- */
 
 /**---- supplier----- */
-Route::middleware('auth:sanctum')->group(function () { //use auth:sanctum wrap in hire
-   
-});
+
 Route::get('get_supplier',[SupplierControllerK1::class,'get_allSupplier_con']);
 Route::get('get_supplier_paginate',[SupplierControllerK1::class,'get_allSupplier_paginate_con']);
 Route::get('get_supplierById',[SupplierControllerK1::class,'get_SupplierById_con']);

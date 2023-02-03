@@ -30,4 +30,12 @@ class UserControllerK1 extends Controller
     {
         return $this->service_user->UserLoginService($request);
     }
+
+    public function LogoutUserCon(Request $request)
+    {
+        auth()->user()->tokens()->delete();
+        return [
+            'message' => 'You have successfully logged out and the token was successfully deleted'
+        ];
+    }
 }
