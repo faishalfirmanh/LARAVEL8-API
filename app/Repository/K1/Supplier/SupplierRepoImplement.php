@@ -15,6 +15,12 @@ class SupplierRepoImplement implements SupplierRepo{
     {
         return $this->model->all();
     }
+
+    public function getSupplierPaginate($limit)
+    {
+        $data = $this->model->limit($limit)->paginate($limit);
+        return $data;
+    }
     public function getSupplierById($id)
     {
         return $this->model->where('id',$id)->first();

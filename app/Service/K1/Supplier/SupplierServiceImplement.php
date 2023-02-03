@@ -18,6 +18,40 @@ class SupplierServiceImplement implements SupplierService{
         $this->repository_supplier = $repository_supplier;
     }
 
+    public function getSupplierServicePaginate($data)
+    {
+        $page_input = $data->page == null ? 1 : intval($data->page);
+        $all_data = $this->repository_supplier->getAllSupplier();
+        $limit = 10;
+        $data_limit = $this->repository_supplier->getSupplierPaginate($limit);
+        $total_page = ceil((count($all_data) / 10));//always round up
+        $var = array();
+        foreach ($data_limit as $key) {
+            unset($key->created_at);
+            unset($key->updated_at);
+            $key->id;
+            $key->name;
+            $key->phone_number;
+            $key->name_pt;
+            array_push($var,$key);
+        }
+        $next_url = $page_input < $total_page ? url()->current().'?page='.intval($page_input+1) : null;
+        $prev_url = $page_input > 1  ? url()->current().'?page='.intval($page_input-1) : null;
+        return response()->json([
+            'status'=>'ok',
+            'data'=>$var,
+            'data_pagination'=>[
+                'current_data_show'=>count($data_limit),
+                'total_data'=>count($all_data),
+                'perpage_or_limit'=>intval($limit),
+                'current_page'=>intval($page_input),
+                'total_page'=>$total_page,
+                'next_url'=> $next_url,
+                'prev_url'=>$prev_url
+            ]
+        ],200);
+    }
+
     public function getPhoneSupplierService($data)
     {
         $validator = Validator::make($data->all(),[

@@ -19,6 +19,11 @@ class SupplierControllerK1 extends Controller
     {
         return $this->service_supplier->getAllSupplierService();
     }
+    public function get_allSupplier_paginate_con(Request $request)
+    {
+         return $this->service_supplier->getSupplierServicePaginate($request);
+    }
+
     public function get_SupplierById_con(Request $request)
     {
         return $this->service_supplier->getSupplierByIdService($request);

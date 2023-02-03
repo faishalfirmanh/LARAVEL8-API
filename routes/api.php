@@ -70,9 +70,10 @@ Route::post('delete_category',[CategoryControllerK1::class,'deleteCategory_Con']
 
 /**---- supplier----- */
 Route::middleware('auth:sanctum')->group(function () { //use auth:sanctum wrap in hire
-    Route::get('get_supplier',[SupplierControllerK1::class,'get_allSupplier_con']);
+   
 });
-
+Route::get('get_supplier',[SupplierControllerK1::class,'get_allSupplier_con']);
+Route::get('get_supplier_paginate',[SupplierControllerK1::class,'get_allSupplier_paginate_con']);
 Route::get('get_supplierById',[SupplierControllerK1::class,'get_SupplierById_con']);
 Route::get('ajax_getPhoneSupplier',[SupplierControllerK1::class,'ajaxGetPhoneSupplier']);
 Route::post('post_supplier',[SupplierControllerK1::class,'post_Supplier_con']);
