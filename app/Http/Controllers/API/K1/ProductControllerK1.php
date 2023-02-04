@@ -22,6 +22,11 @@ class ProductControllerK1 extends Controller
        return $this->service_product->getAllProductServiceAndSearch($request);
     }
 
+    public function GetAllProductPaginate_con(Request $request)
+    {
+        return $this->service_product->getProductServicePaginate($request);
+    }
+
     /**-- for ajax when onchange value */
     public function GetRecomentInputPriceSell_con(Request $request){
         $percent_setting = cekSettingVoucer()->percent_set_minimum_sell;

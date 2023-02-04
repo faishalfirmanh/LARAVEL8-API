@@ -36,6 +36,18 @@ class ProductRepoImplement implements ProductRepo{
         return $this->model->all();
     }
 
+    public function getProductPaginate($limit)
+    {
+        $all_data = $this->model
+        ->join('k1_product_category','k1_product_category.id_product','=','k1_product.id')
+        ->join('k1_category','k1_category.id','=','k1_product_category.id_category')
+        ->join('k1_product_supplier','k1_product_supplier.id_product','=','k1_product.id')
+        ->join('k1_supplier','k1_supplier.id','=','k1_product_supplier.id_supplier')
+        ->join('k1_product_stock','k1_product_stock.id_product','=','k1_product.id')
+        ->limit($limit)->paginate($limit);
+        return $all_data;
+    }
+
     public function getProductSearch($keyword)
     {
         $all_data = $this->model

@@ -93,6 +93,7 @@ Route::get('recommend_onchange_input_price_sell',[ProductControllerK1::class,'Ge
 
 /**---- Product Start----- */
 Route::get('get_allProduct',[ProductControllerK1::class, 'getAllProduct_con']);
+Route::get('get_product_paginate',[ProductControllerK1::class, 'GetAllProductPaginate_con']);
 Route::get('get_ProductByid',[ProductControllerK1::class, 'getProductById_con']);
 Route::post('post_Product',[ProductControllerK1::class, 'postProduct_con']);//->ok
 Route::post('update_Product',[ProductControllerK1::class, 'updateProduct_con']);

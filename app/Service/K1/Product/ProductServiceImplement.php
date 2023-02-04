@@ -59,7 +59,41 @@ class ProductServiceImplement implements ProductService{
 
     public function getProductServicePaginate($page)
     {
-        
+        $page_input = $page->page == null ? 1 : $page->page;
+        $limit = 5;
+        $all_data = $this->repository_product->getAllProduct();
+        $data_paginate = $this->repository_product->getProductPaginate($limit);
+        $total_page = ceil((count($all_data) / $limit));
+        $i = 0;
+        $array_product = array();
+        foreach ($data_paginate as $key) {
+            unset($key->created_at);
+            unset($key->updated_at);
+            $array_product[$i]["id_product"] = $key->id;
+            $array_product[$i]["name_product"] = $key->name_product;
+            $array_product[$i]["total_stock"] =  $key->stockProduct->stock;
+            $array_product[$i]["price_buy"] = number_format($key->stockProduct->harga_jual);
+            $array_product[$i]["price_sell"] = number_format($key->stockProduct->harga_beli);
+            $array_product[$i]["category"] = $key->categoryProduct[0]->name_category;
+            $array_product[$i]["name_supplier"] = $key->supplierProduct[0]->name;
+            $i++;
+        }
+        $next_url = $page_input < $total_page ? url()->current().'?page='.intval($page_input+1) : null;
+        $prev_url = $page_input > 1  ? url()->current().'?page='.intval($page_input-1) : null;
+        return response()->json([
+            'status'=>count($array_product) > 0 ? 'ok' : 'empty',
+            'data'=>count($array_product) > 0 ? $array_product : 'empty',
+            'data_pagination'=>[
+                'current_data_show'=>count($data_paginate),
+                'total_data'=>count($all_data),
+                'perpage_or_limit'=>intval($limit),
+                'current_page'=>intval($page_input),
+                'total_page'=>$total_page,
+                'next_url'=> $next_url,
+                'prev_url'=>$prev_url
+            ]
+        ],count($array_product) > 0 ? 200 : 404);
+
     }
 
     public function getProducByIdService($id)
