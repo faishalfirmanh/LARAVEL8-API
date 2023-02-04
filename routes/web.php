@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WEB\k1\HomeControllerWeb_k1;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WEB\P1\HomeController;
 /*
@@ -13,7 +14,8 @@ use App\Http\Controllers\WEB\P1\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-//Route::get('/',[HomeController::class,'index']);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/',[HomeControllerWeb_k1::class,'index']);
+Route::get('/admin',[HomeControllerWeb_k1::class,'Admin'])->name('admin_k1_web');

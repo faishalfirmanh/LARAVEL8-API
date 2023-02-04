@@ -60,7 +60,7 @@ class ProductServiceImplement implements ProductService{
     public function getProductServicePaginate($page)
     {
         $page_input = $page->page == null ? 1 : $page->page;
-        $limit = 5;
+        $limit = 10;
         $all_data = $this->repository_product->getAllProduct();
         $data_paginate = $this->repository_product->getProductPaginate($limit);
         $total_page = ceil((count($all_data) / $limit));

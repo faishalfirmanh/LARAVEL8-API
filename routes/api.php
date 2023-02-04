@@ -56,7 +56,7 @@ Route::get('get_category_ParamName/{name}',[CategoryControllerK1::class,'getCate
 
 /**------- User ----------- */
 Route::post('register_userK1',[UserControllerK1::class,'RegisterUserCon']);//ok
-Route::post('login_userK1',[UserControllerK1::class, 'LoginUserCon']);//ok
+Route::post('login_userK1',[UserControllerK1::class, 'LoginUserCon'])->name('login_userK1');//ok
 Route::get('get_userByIdk1',[UserControllerK1::class,'getUserByIdCon']);
 /**------- User End ----------- */
 
