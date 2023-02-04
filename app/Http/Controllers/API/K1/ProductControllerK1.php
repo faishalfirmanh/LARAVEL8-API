@@ -18,8 +18,8 @@ class ProductControllerK1 extends Controller
     {
         $this->service_product = $service_product;
     }
-    public function getAllProduct_con(){
-       
+    public function getAllProduct_con(Request $request){
+       return $this->service_product->getAllProductServiceAndSearch($request);
     }
 
     /**-- for ajax when onchange value */

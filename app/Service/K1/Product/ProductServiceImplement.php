@@ -8,6 +8,7 @@ use App\Rules\K1\Rules_cek_category_product_id;
 use App\Rules\K1\Rules_cek_productId;
 use App\Rules\K1\Rules_cek_same_name_product;
 use App\Rules\K1\Rules_cek_supplier_id;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
 class ProductServiceImplement implements ProductService{
@@ -28,7 +29,35 @@ class ProductServiceImplement implements ProductService{
         $this->repository_prod_category = $repository_prod_category;
     }
 
-    public function getAllProductService()
+    public function getAllProductServiceAndSearch($search)
+    {  
+        if (empty($search->keyword)) {
+            $data = $this->repository_product->getAllProduct();
+        }else{
+           $data =  $this->repository_product->getProductSearch($search->keyword);
+        }
+       
+        $array_product = array();
+        $i = 0;
+        foreach ($data as $key) {
+            unset($key->created_at);
+            unset($key->updated_at);
+            $array_product[$i]["id_product"] = $key->id;
+            $array_product[$i]["name_product"] = $key->name_product;
+            $array_product[$i]["total_stock"] =  $key->stockProduct->stock;
+            $array_product[$i]["price_buy"] = number_format($key->stockProduct->harga_jual);
+            $array_product[$i]["price_sell"] = number_format($key->stockProduct->harga_beli);
+            $array_product[$i]["category"] = $key->categoryProduct[0]->name_category;
+            $array_product[$i]["name_supplier"] = $key->supplierProduct[0]->name;
+            $i++;
+        }
+        return response()->json([
+            'status'=>count($array_product) > 0 ? 'ok' : 'empty',
+            'data'=>count($array_product) > 0 ? $array_product : 'empty'
+        ],count($array_product) > 0 ? 200 : 403);
+    }
+
+    public function getProductServicePaginate($page)
     {
         
     }

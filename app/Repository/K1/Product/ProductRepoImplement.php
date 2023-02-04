@@ -35,6 +35,26 @@ class ProductRepoImplement implements ProductRepo{
     {
         return $this->model->all();
     }
+
+    public function getProductSearch($keyword)
+    {
+        $all_data = $this->model
+        ->join('k1_product_category','k1_product_category.id_product','=','k1_product.id')
+        ->join('k1_category','k1_category.id','=','k1_product_category.id_category')
+        ->join('k1_product_supplier','k1_product_supplier.id_product','=','k1_product.id')
+        ->join('k1_supplier','k1_supplier.id','=','k1_product_supplier.id_supplier')
+        ->join('k1_product_stock','k1_product_stock.id_product','=','k1_product.id')
+        /**->where(function($query)use ($keyword) {
+            $query->where('k1_product.name_product','like','%'.$keyword.'%')
+            ->orWhere('k1_category.name_category','like','%'.$keyword.'%')
+            ->orWhere('k1_supplier.name','like','%'.$keyword.'%');
+        })*/ 
+        /** --semua dari name_supplier,name_product,category, tapi semuag tabel harus terisi */
+        ->where('k1_product.name_product','like','%'.$keyword.'%') /** name product saja */
+        ->get();
+        return $all_data;
+    }
+
     public function getProductById($id)
     {
         return K1_Product::query()->where('id',$id)->select('id','name_product','expired_date')->first();

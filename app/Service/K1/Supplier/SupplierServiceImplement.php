@@ -38,8 +38,8 @@ class SupplierServiceImplement implements SupplierService{
         $next_url = $page_input < $total_page ? url()->current().'?page='.intval($page_input+1) : null;
         $prev_url = $page_input > 1  ? url()->current().'?page='.intval($page_input-1) : null;
         return response()->json([
-            'status'=>'ok',
-            'data'=>$var,
+            'status'=>count($var)>0 ? 'ok' : 'empty',
+            'data'=>count($var)>0 ? $var : 'empty',
             'data_pagination'=>[
                 'current_data_show'=>count($data_limit),
                 'total_data'=>count($all_data),
@@ -49,7 +49,7 @@ class SupplierServiceImplement implements SupplierService{
                 'next_url'=> $next_url,
                 'prev_url'=>$prev_url
             ]
-        ],200);
+        ],count($var)>0 ? 200 : 404);
     }
 
     public function getPhoneSupplierService($data)
