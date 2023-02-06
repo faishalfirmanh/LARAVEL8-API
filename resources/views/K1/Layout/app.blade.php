@@ -79,11 +79,13 @@
                         window.location.href = '{{route("admin_k1_web")}}'
                    }else{
                         const notif = document.getElementById('notif_login');
+                        notif.textContent=resp.email;
                         notif.classList.remove("d-none");
                    }
                 },
                 error(err){
                     const notif = document.getElementById('notif_login');
+                    notif.textContent='Password is incorrect';
                     notif.classList.remove("d-none");
                 }
             });

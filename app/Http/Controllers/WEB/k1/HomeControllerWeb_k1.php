@@ -13,8 +13,18 @@ class HomeControllerWeb_k1 extends Controller
         return view('K1.Home.index');
     }
 
-    public function Admin()
+    public function Dashboard()
     {
-        return "dd";
+        return view('K1.Dashboard.index');
+    }
+
+    public function GetSupplier()
+    {
+        return view('K1.Supplier.index');
+    }
+
+    public function GetProduct()
+    {
+        return view('K1.Product.index');
     }
 }

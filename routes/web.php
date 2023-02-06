@@ -18,4 +18,6 @@ use App\Http\Controllers\WEB\P1\HomeController;
 //     return view('welcome');
 // });
 Route::get('/',[HomeControllerWeb_k1::class,'index']);
-Route::get('/admin',[HomeControllerWeb_k1::class,'Admin'])->name('admin_k1_web');
+Route::get('/admin',[HomeControllerWeb_k1::class,'Dashboard'])->name('admin_k1_web');
+Route::get('/Product',[HomeControllerWeb_k1::class,'GetProduct'])->name('product_k1_web');
+Route::get('/Supplier',[HomeControllerWeb_k1::class,'GetSupplier'])->name('supplier_k1_web');
